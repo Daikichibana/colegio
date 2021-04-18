@@ -15,10 +15,10 @@ class CreateTipoNotaTable extends Migration
     {
         Schema::create('tipo_nota', function (Blueprint $table) {
             $table->id();
-            $table->integer('nota ser');
-            $table->integer('nota saber');
-            $table->integer('nota hacer');
-            $table->integer('nota decidir');
+            $table->integer('nota_ser');
+            $table->integer('nota_saber');
+            $table->integer('nota_hacer');
+            $table->integer('nota_decidir');
         });
     }
 
