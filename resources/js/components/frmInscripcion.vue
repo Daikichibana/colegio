@@ -137,7 +137,7 @@
             return{
                 listado: 0,
                 estudiante:'',
-                curso: 0,
+                curso: '',
                 buscar : '',
                 arrayInscripcion:[]
             }
