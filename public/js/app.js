@@ -2018,7 +2018,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       listado: 0,
       estudiante: '',
-      curso: 0,
+      curso: '',
       buscar: '',
       arrayInscripcion: []
     };
