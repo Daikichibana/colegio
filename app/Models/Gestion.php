@@ -14,6 +14,6 @@ class Gestion extends Model
     protected $table = 'gestion';
 
     public function curso(){
-        return $this->belongsToMany(Curso::class, 'asigancioncursogestion', 'id_gestion','id_curso');
+        return $this->belongsToMany(Curso::class, 'asignacioncursogestion', 'id_gestion','id_curso');
     }
 }
