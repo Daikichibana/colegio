@@ -9,13 +9,15 @@ use DB;
 class ApoderadoController extends Controller
 {
     public function index(Request $request){
+
         $buscar= $request->buscar;
         if($buscar==''){
             $apoderado=Apoderado::all();
         }
+
         else{
             $apoderado=Apoderado::where('nombre','like','%'.$buscar.'%')->get();
-            
+
         }
         return $apoderado;
     }

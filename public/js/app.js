@@ -2013,51 +2013,168 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       listado: 0,
-      estudiante: '',
-      curso: '',
-      buscar: '',
+      estudiante: "",
+      curso: "",
+      fecha: "",
+      buscar: "",
+      arrayApoderado: [],
       arrayInscripcion: []
     };
   },
   methods: {
     nuevo: function nuevo() {
       /*
-      this.id_cliente = 0;
-      this.cliente = '';
-      this.fecha_venta = '';
-      this.total = 0.0;
-      this.id_producto = 0;
-      this.producto = '';
-      this.cantidad = 0;
-      this.preciov = 0.0;
-      this.stock = 0;
-      this.arrayDetalle = [];
-      this.errorMsj = '';
-      this.respt='';
-      */
+                this.id_inscripcion = 0;
+                this.inscripcion = '';
+                this.fecha_venta = '';
+                this.total = 0.0;
+                this.id_producto = 0;
+                this.producto = '';
+                this.cantidad = 0;
+                this.preciov = 0.0;
+                this.stock = 0;
+                this.arrayDetalle = [];
+                this.errorMsj = '';
+                this.respt='';
+                */
     },
-    guardarInscirpcion: function guardarInscirpcion() {
+    guardarInscripcion: function guardarInscripcion() {
       var me = this;
-      axios.post('/Inscipcion/registrar', {
+      axios.post("/Inscipcion/registrar", {
         /*
-        fecha : this.fecha_venta,
-        monto : this.total,
-        id_cliente: this.id_cliente,
-        data : this.arrayDetalle
-        */
+                  fecha : this.fecha_venta,
+                  monto : this.total,
+                  id_inscripcion: this.id_inscripcion,
+                  data : this.arrayDetalle
+                  */
+        estudiante: this.estudiante,
+        curso: this.curso,
+        fecha: this.fecha,
+        data: this.arrayInscripcion
       }).then(function (response) {
-        me.respt = 'Incripcion Registrada...!';
+        me.respt = "Incripcion Registrada...!";
       })["catch"](function (error) {
         console.log(error);
       });
     },
     listar: function listar(buscar) {
       var me = this;
-      var url = '/Inscripcion?buscar=' + buscar;
+      /*
+      var url = "/apoderado?buscar=" + buscar;
+      axios
+        .get(url)
+        .then(function (response) {
+          me.arrayApoderado = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      */
+
+      var url = "/inscripcion?buscar=" + buscar;
       axios.get(url).then(function (response) {
         me.arrayInscripcion = response.data;
       })["catch"](function (error) {
@@ -2066,11 +2183,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     buscarInscripcion: function buscarInscripcion() {
       this.listado = 1;
-      this.listar('');
+      this.listar("");
     }
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log("Component mounted.");
+    this.listar(this.buscar);
   }
 });
 
@@ -38051,8 +38169,59 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(0),
                 _vm._v(" "),
+                _c("tr", [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: "#",
+                        "data-toggle": "modal",
+                        "data-target": "#modalApoderado"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.frmAgregarApoderado()
+                        }
+                      }
+                    },
+                    [_vm._v("Agregar Apoderado")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("table", { attrs: { border: "1" } }, [
                 _vm._m(1),
                 _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.arrayApoderado, function(apoderado) {
+                    return _c("tr", { key: apoderado.id }, [
+                      _c("td", {
+                        domProps: { textContent: _vm._s(apoderado.id) }
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(apoderado.nombre) }
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(apoderado.apellidos) }
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(apoderado.telefono) }
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(apoderado.relacion) }
+                      })
+                    ])
+                  }),
+                  0
+                )
+              ]),
+              _vm._v(" "),
+              _c("table", [
                 _c("tr", [
                   _c("td", { attrs: { colspan: "3" } }, [
                     _c(
@@ -38078,7 +38247,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Guardar")]
+                      [_vm._v("\n              Guardar\n            ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -38091,7 +38260,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Modificar")]
+                      [_vm._v("\n              Modificar\n            ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -38104,7 +38273,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Eliminar")]
+                      [_vm._v("\n              Eliminar\n            ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -38125,16 +38294,56 @@ var render = function() {
             ])
           ]
         : _vm.listado == 1
-        ? [_c("h4", [_vm._v("Hola mundo")])]
+        ? [
+            _c("table", { attrs: { border: "1" } }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.arrayInscripcion, function(inscripcion) {
+                  return _c("tr", { key: inscripcion.id }, [
+                    _c("td", {
+                      domProps: { textContent: _vm._s(inscripcion.id) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: {
+                        textContent: _vm._s(inscripcion.fechaInscripcion)
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: {
+                        textContent: _vm._s(inscripcion.id_aCursoGestion)
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: {
+                        textContent: _vm._s(inscripcion.id_estudiante)
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: {
+                        textContent: _vm._s(inscripcion.id_apoderado)
+                      }
+                    })
+                  ])
+                }),
+                0
+              )
+            ])
+          ]
         : _vm._e(),
-      _vm._v(" "),
-      _vm._m(2),
       _vm._v(" "),
       _vm._m(3),
       _vm._v(" "),
       _vm._m(4),
       _vm._v(" "),
-      _vm._m(5)
+      _vm._m(5),
+      _vm._v(" "),
+      _vm._m(6)
     ],
     2
   )
@@ -38154,18 +38363,32 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", [
-      _c("tr", [
-        _c("td", [_vm._v("Id")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("Nombre")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("Apellido")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("Telefono")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("Relacion")])
-      ])
+    return _c("thead", [
+      _c("th", [_vm._v("Id")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Nombre")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Apellidos")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Telefono")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Relacion")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("Id")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("fecha Inscripcion")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Curso")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Estudiante")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Apoderado")])
     ])
   },
   function() {
