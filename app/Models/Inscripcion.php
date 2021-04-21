@@ -10,8 +10,8 @@ class Inscripcion extends Model
     protected $table="Inscripcion";
     protected $fillable=[
         'id_inscripcion',
-        'fecha',
-        'id_curso',
+        'fechaInscripcion',
+        'id_aCursoGestion',
         'id_estudiante',
         'id_apoderado'
     ];
