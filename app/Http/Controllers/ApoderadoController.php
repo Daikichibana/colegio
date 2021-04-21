@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Apoderado;
+use App\Models\Inscripcion;
 use DB;
 
 class ApoderadoController extends Controller
@@ -34,6 +35,12 @@ class ApoderadoController extends Controller
         $apoderado->apellidos=$request->apellidos;
         $apoderado->telefono=$request->telefono;
         $apoderado->save();
-        
+    }
+    public function selectApoderado(Request $request){
+        $filtro=$request->filtro;
+        $apoderado= Apoderado::where('nombre','like','%'.$filtro.'%')
+        ->select('id','nombre','apellidos','telefono','relacion')
+        ->get();
+        return $apoderado;
     }
 }
