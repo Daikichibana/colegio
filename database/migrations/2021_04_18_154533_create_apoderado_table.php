@@ -18,7 +18,7 @@ class CreateApoderadoTable extends Migration
             $table->string('nombre', 15);
             $table->string('apellidos', 40);
             $table->integer('telefono');
-            $table->string('relacion',50);
+           
         });
     }
 

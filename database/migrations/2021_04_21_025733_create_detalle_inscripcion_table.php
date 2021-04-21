@@ -14,7 +14,14 @@ class CreateDetalleInscripcionTable extends Migration
     public function up()
     {
         Schema::create('detalle_inscripcion', function (Blueprint $table) {
-          
+            $table->unsignedBigInteger('id_Apoderado');
+            $table->unsignedBigInteger('id_inscripcion');
+            $table->string('relacion',50);
+      
+            $table->primary(['id_Apoderado', 'id_inscripcion']);
+
+            $table->foreign('id_Apoderado')->references('id')->on('apoderado');
+            $table->foreign('id_inscripcion')->references('id')->on('inscripcion');
             
         });
     }
