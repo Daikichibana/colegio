@@ -1,152 +1,336 @@
 <template>
-    <div class="container">
+  <div class="container">
+    <!-- menu registro de Inscripcion -->
+    <template v-if="listado == 0">
+      <form action="" method="POST">
+        <table>
+          <tr>
+            <td>Estudiante</td>
+            <td>
+              <input
+                type="text"
+                v-model="estudiante"
+                placeholder="estudiante..."
+              />
+            </td>
+            <a
+              href="#"
+              @click="frmBuscarEstudiante()"
+              data-toggle="modal"
+              data-target="#modalEstudiante"
+              >Buscar Estudiante</a
+            >
+          </tr>
+          <tr>
+            <td>Curso</td>
+            <td>
+              <input type="text" v-model="curso" placeholder="curso..." />
+            </td>
+            <a
+              href="#"
+              @click="frmBuscarCurso()"
+              data-toggle="modal"
+              data-target="#modalCurso"
+              >Buscar Curso</a
+            >
+            <a
+              href="#"
+              @click="frmVerificarNotas()"
+              data-toggle="modal"
+              data-target="#modalNotas"
+              >Verificar Notas</a
+            >
+          </tr>
+          <tr>
+            <td>Fecha</td>
+            <td><input type="date" /></td>
+          </tr>
+          <tr>
+            <a
+              href="#"
+              @click="frmBuscarApoderado()"
+              data-toggle="modal"
+              data-target="#modalApoderado"
+              >Agregar Apoderado</a
+            >
+          </tr>
+          <tr>
+          </tr>
+        </table>
 
-        <!-- menu registro de Inscripcion -->
-        <template v-if="listado==0">
-            <form action="" method="POST">
-                <table>
-                    <tr>
-                        <td>Estudiante</td>
-                        <td><input type="text" v-model="estudiante" placeholder="estudiante..."></td>
-                        <a href="#" @click="frmBuscarEstudiante()" data-toggle="modal" data-target="#modalEstudiante">Buscar Estudiante</a>
-                    </tr>
-                    <tr>
-                        <td>Curso</td>
-                        <td><input type="text" v-model="curso" placeholder="curso..."></td>
-                        <a href="#" @click="frmBuscarCurso()" data-toggle="modal" data-target="#modalCurso">Buscar Curso</a>
-                        <a href="#" @click="frmVerificarNotas()" data-toggle="modal" data-target="#modalNotas">Verificar Notas</a>
-                    </tr>
-                    <tr>
-                        <td>Fecha</td>
-                        <td><input type="date"></td>
-                    </tr>
-                    <!-- Detalle Apoderados -->
-                    <table>
-                        <tr>
-                        <td>Id</td>
-                        <td>Nombre</td>
-                        <td>Apellido</td>
-                        <td>Telefono</td>
-                        <td>Relacion</td>
-                        </tr>
-                    </table>
-                    <!-- Botones -->
-                    <tr>
-                        <td colspan="3">
-                            <button type="button" @click="nuevo()">Nuevo</button>
-                            <button type="button" @click="guardarInscripcion()">Guardar</button>
-                            <button type="button" @click="modificarInscripcion()">Modificar</button>
-                            <button type="button" @click="anularInscripcion()">Eliminar</button>
-                            <button type="button" @click="buscarInscripcion()">Buscar</button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </template>
+        <!-- Detalle Apoderados -->
+        <table border="1">
+          <thead>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Telefono</th>
+            <th>Relacion</th>
+          </thead>
+          <tbody>
+            <tr v-for="apoderado in arrayApoderado" :key="apoderado.id">
+              <td v-text="apoderado.id"></td>
+              <td v-text="apoderado.nombre"></td>
+              <td v-text="apoderado.apellidos"></td>
+              <td v-text="apoderado.telefono"></td>
+              <td v-text="apoderado.relacion"></td>
+              <td>
+                <a
+                  href="#"
+                  data-dismiss="modal"
+                  @click="seleccionarApoderado(apoderado)"
+                  >Seleccionar</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-        <!-- menu de buscar Inscripcion -->
-        <template v-else-if="listado==1">
-            <!-- Aqui va el codigo -->
-            <h4>Hola mundo</h4>
-        </template>
+        <table>
+          <!-- Botones -->
+          <tr>
+            <td colspan="3">
+              <button type="button" @click="nuevo()">Nuevo</button>
+              <button type="button" @click="guardarInscripcion()">
+                Guardar
+              </button>
+              <button type="button" @click="modificarInscripcion()">
+                Modificar
+              </button>
+              <button type="button" @click="anularInscripcion()">
+                Eliminar
+              </button>
+              <button type="button" @click="buscarInscripcion()">Buscar</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </template>
 
-        <!-- Inicio Modal frmBuscarEstudiante -->
-        <div class="modal fade" id="modalEstudiante" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Busqueda de Estudiante</h4>
-                        <button type="button" data-dismiss="modal">x</button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Aqui va su codigo -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
+    <!-- menu de buscar Inscripcion -->
+    <template v-else-if="listado == 1">
+      <!-- Buscar Inscripciones -->
+      <table border="1">
+        <thead>
+          <th>Id</th>
+          <th>fecha Inscripcion</th>
+          <th>Curso</th>
+          <th>Estudiante</th>
+          <th>Apoderado</th>
+        </thead>
+        <tbody>
+          <tr v-for="inscripcion in arrayInscripcion" :key="inscripcion.id">
+            <td v-text="inscripcion.id"></td>
+            <td v-text="inscripcion.fechaInscripcion"></td>
+            <td v-text="inscripcion.id_aCursoGestion"></td>
+            <td v-text="inscripcion.id_estudiante"></td>
+            <td v-text="inscripcion.id_apoderado"></td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+
+    <!-- Inicio Modal frmBuscarEstudiante -->
+    <div
+      class="modal fade"
+      id="modalEstudiante"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-primary modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Busqueda de Estudiante</h4>
+            <button type="button" data-dismiss="modal">x</button>
+          </div>
+          <div class="modal-body">
+            <!-- Aqui va su codigo -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal">Cerrar</button>
+          </div>
         </div>
-        <!-- Fin Modal frmBuscarEstudiante -->
-
-         <!-- Inicio Modal frmBuscarCurso -->
-        <div class="modal fade" id="modalCurso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Busqueda de Curso</h4>
-                        <button type="button" data-dismiss="modal">x</button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Aqui va su codigo -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Fin Modal frmBuscarCurso -->
-
-
-        <!-- Inicio Modal frmBuscarNotas -->
-        <div class="modal fade" id="modalNotas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Busqueda de Notas</h4>
-                        <button type="button" data-dismiss="modal">x</button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Aqui va su codigo -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Fin Modal frmBuscarApoderado -->
-
-
-        <!-- Inicio Modal frmBuscarApoderado -->
-        <div class="modal fade" id="modalApoderado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-primary modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Busqueda de Apoderado</h4>
-                        <button type="button" data-dismiss="modal">x</button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Aqui va su codigo -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Fin Modal frmBuscarApoderado -->
-       
+      </div>
     </div>
+    <!-- Fin Modal frmBuscarEstudiante -->
+
+    <!-- Inicio Modal frmBuscarCurso -->
+    <div
+      class="modal fade"
+      id="modalCurso"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-primary modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Busqueda de Curso</h4>
+            <button type="button" data-dismiss="modal">x</button>
+          </div>
+          <div class="modal-body">
+            <!-- Aqui va su codigo -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal frmBuscarCurso -->
+
+    <!-- Inicio Modal frmBuscarNotas -->
+    <div
+      class="modal fade"
+      id="modalNotas"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-primary modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Busqueda de Notas</h4>
+            <button type="button" data-dismiss="modal">x</button>
+          </div>
+          <div class="modal-body">
+            <!-- Aqui va su codigo -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal frmBuscarNota -->
+
+    <!-- Inicio Modal frmBuscarApoderado -->
+    <div
+      class="modal fade"
+      id="modalApoderado"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-primary modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Busqueda de Apoderado</h4>
+            <button type="button" @click="cerrarModal()" data-dismiss="modal">
+              x
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group row">
+              <div class="col-md-8">
+                <div class="input-group">
+                  <input type="text" v-model="buscar" placeholder="Nombre" />
+                  <button type="button" @click="listar(buscar)"> Buscar </button>
+                 
+                  <table border="1">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Telefono</th>
+                        <th>Relacion</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="apoderado in arrayApoderado"
+                        :key="apoderado.id"
+                      >
+                        <td v-text="apoderado.id"></td>
+                        <td v-text="apoderado.nombre"></td>
+                        <td v-text="apoderado.apellidos"></td>
+                        <td v-text="apoderado.telefono"></td>
+                        <td v-text="apoderado.relacion"></td>
+                        <td>
+                          <a
+                            href="#"
+                            data-dismiss="modal"
+                            @click="seleccionarApoderado(apoderado)"
+                            >Seleccionar</a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- Aqui va su codigo -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal" @click="cerrarModal()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal frmBuscarApoderado -->
+  </div>
 </template>
 
 <script>
-    export default {
-        data(){
-            return{
-                listado: 0,
-                estudiante:'',
-                curso: '',
-                buscar : '',
-                arrayInscripcion:[]
-            }
-        },
-        methods:{
-            nuevo(){
-                /*
-                this.id_cliente = 0;
-                this.cliente = '';
+export default {
+  data() {
+    return {
+      listado: 0,
+      estudiante: "",
+      curso: "",
+      fecha: "",
+      buscar: "",
+      buscarA: "",
+      apoderado: "",
+      id_apoderado: 0,
+      arrayApoderado: [],
+      arrayInscripcion: [],
+    };
+  },
+  methods: {
+    listar(buscar) {
+      this.arrayApoderado = [];
+      this.buscarA = "";
+       let me=this;
+                var url='/apoderado?buscar='+buscar;
+                axios.get(url).then(function(response){
+                    me.arrayApoderado=response.data;
+                })
+                .catch(function(error){
+                    console:log(error);
+                });
+    },
+    buscarApoderado(buscar) {
+      let me = this;
+      var url = "/apoderado/selectApoderado?filtro=" + buscar;
+      axios
+        .get(url)
+        .then(function (response) {
+          me.arrayApoderado = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    seleccionarApoderado(dat = []) {
+      this.id_apoderado = data['id'];
+      this.apoderado = data['nombre'] + '' + data['apellidos'] ;
+    },
+    nuevo() {
+      /*
+                this.id_inscripcion = 0;
+                this.inscripcion = '';
                 this.fecha_venta = '';
                 this.total = 0.0;
                 this.id_producto = 0;
@@ -158,39 +342,63 @@
                 this.errorMsj = '';
                 this.respt='';
                 */
-            },
-            guardarInscirpcion(){
-                let me = this;
-                axios.post('/Inscipcion/registrar',{
-                    /*
+    },
+
+    guardarInscripcion() {
+      let me = this;
+      axios
+        .post("/Inscipcion/registrar", {
+          /*
                     fecha : this.fecha_venta,
                     monto : this.total,
-                    id_cliente: this.id_cliente,
+                    id_inscripcion: this.id_inscripcion,
                     data : this.arrayDetalle
                     */
-                }).then(function (response) {
-                    me.respt = 'Incripcion Registrada...!';
-                }).catch(function (error) {
-                    console.log(error);
-                });   
-            },
-            listar(buscar){
-                let me = this;
-                var url='/Inscripcion?buscar=' + buscar;
-                axios.get(url).then(function(response){
-                    me.arrayInscripcion = response.data;
-                })
-                .catch(function(error){
-                    console.log(error);
-                });
-            },
-            buscarInscripcion(){
-                this.listado=1;
-                this.listar('');
-            }
-        },
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
+
+          estudiante: this.estudiante,
+          curso: this.curso,
+          fecha: this.fecha,
+          data: this.arrayApoderado,
+        })
+        .then(function (response) {
+          me.respt = "Incripcion Registrada...!";
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    listarInscripcion(buscar) {
+      let me = this;
+      var url = "/inscripcion?buscar=" + buscar;
+      axios
+        .get(url)
+        .then(function (response) {
+          me.arrayInscripcion = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    listarApoderado(buscar) {
+      let me = this;
+      var url = "/apoderado?buscar=" + buscar;
+      axios
+        .get(url)
+        .then(function (response) {
+          me.arrayApoderado = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    buscarInscripcion() {
+      this.listado = 1;
+      this.listar("");
+    },
+  },
+  mounted() {
+    console.log("Component mounted.");
+    this.listar(this.buscar);
+  },
+};
 </script>
