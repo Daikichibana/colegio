@@ -7,21 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class asignacionCursoGestion extends Model
 {
-    protected $table = 'asigancioncursogestion';
+    protected $table = 'asignacioncursogestion';
     protected $fillable=[
         'id_curso',
-        'id_gestion'
+        'id_gestion',
+        'id_paralelo'
     ];
     public $timestamps=false;
+
+    public function paralelo(){
+        return $this->belongsTo(Paralelo::class, 'id_paralelo');
+    }
+
 }
-
-
-// para la migracion, talvez digo no mas
-// $table->id();
-// $table->unsignedBigInteger('id_curso');
-// $table->unsignedBigInteger('id_gestion');
-
-// $table->unique(['id_curso', 'id_gestion']);
-
-// $table->foreign('id_curso')->references('id')->on('curso')->onDelete('cascade');
-// $table->foreign('id_gestion')->references('id')->on('gestion')->onDelete('cascade');

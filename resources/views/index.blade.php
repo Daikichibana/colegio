@@ -21,6 +21,9 @@
                         <li @click="menu=2">
                             <a class="nav-link" href="#">Apoderado</a>
                         </li>
+                        <li @click="menu=3">
+                            <a class="nav-link" href="#">Curso</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -33,6 +36,9 @@
             </template>
             <template v-if="menu==2">
                 <frmapoderado></frmapoderado>
+            </template>
+            <template v-if="menu==3">
+                <frmbuscarcurso></frmbuscarcurso>
             </template>
         </div>
     </div>

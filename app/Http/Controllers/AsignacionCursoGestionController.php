@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\asignacionCursoGestion;
+use DB;
 
 class AsignacionCursoGestionController extends Controller
 {
@@ -12,11 +13,50 @@ class AsignacionCursoGestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    // public function index()
+    // {
+    //     // $aCursoGestion=DB::table('asignacioncursogestion')
+    //     // ->join('gestion', 'id_gestion', '=', 'gestion.id')
+    //     // ->join('curso', 'id_curso', '=', 'curso.id')
+    //     // ->select('asignacioncursogestion.*')
+    //     // ->get();
+        
+    //     $aCursoGestion=asignacionCursoGestion::all();
+    //     return ['asignacionCursoGestion'=>$aCursoGestion];
+    // }
+    public function index(Request $request){
+
+        $buscar= $request->buscar;
+        if($buscar==''){
+            $s=DB::table('asignacioncursogestion')
+            ->join('gestion', 'id_gestion', '=', 'gestion.id')
+            ->join('curso', 'id_curso', '=', 'curso.id')
+            ->join('paralelo', 'id_paralelo', '=', 'paralelo.id')
+            ->select('asignacioncursogestion.id',  
+                        'curso.nombre as curso_nombre', 
+                        'gestion.nombre as gestion_nombre',
+                        'paralelo.nombre as paralelo_nombre'
+                    )
+            ->get();
+        }
+
+        else{
+             $s=DB::table('asignacioncursogestion')
+             ->join('gestion', 'id_gestion', '=', 'gestion.id')
+             ->join('curso', 'id_curso', '=', 'curso.id')
+             ->join('paralelo', 'id_paralelo', '=', 'paralelo.id')
+             ->select('asignacioncursogestion.id',  
+                         'curso.nombre as curso_nombre', 
+                         'gestion.nombre as gestion_nombre',
+                         'paralelo.nombre as paralelo_nombre'
+                     )
+             ->where('curso.nombre','like','%'.$buscar.'%')
+             ->get();
+        }
+        return $s;
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *

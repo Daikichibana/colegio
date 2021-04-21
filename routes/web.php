@@ -29,3 +29,5 @@ Route::get('/inscripcion/registrar', [App\Http\Controllers\InscripcionController
 Route::get('/apoderado', [App\Http\Controllers\ApoderadoController::class, 'index']);
 Route::post('/apoderado/registrar', [App\Http\Controllers\ApoderadoController::class, 'store']);
 
+//rutas buscar Curso
+Route::get('/frmbuscarcurso', [App\Http\Controllers\AsignacionCursoGestionController::class, 'index']);

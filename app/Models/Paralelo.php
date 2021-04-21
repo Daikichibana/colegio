@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Curso extends Model
+class Paralelo extends Model
 {
     protected $fillable=[
         'nombre'
     ];
     public $timestamps=false;
+    protected $table = 'paralelo';
 
-    public function gestion()
-    {
-        return $this->belongsToMany(Gestion::class, 'asignacioncursogestion', 'id_curso','id_gestion');
+    public function asignacioncursogestion(){
+        return $this->hasMany(asignacionCursogestion::class, 'id_paralelo');
     }
-    
-    protected $table = 'curso';
 }
