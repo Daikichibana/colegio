@@ -2112,6 +2112,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2121,62 +2127,43 @@ __webpack_require__.r(__webpack_exports__);
       fecha: "",
       buscar: "",
       arrayApoderado: [],
-      arrayInscripcion: []
+      arrayInscripcion: [],
+      relacion: "",
+      arrayDetalle: []
     };
   },
   methods: {
     nuevo: function nuevo() {
-      /*
-                this.id_inscripcion = 0;
-                this.inscripcion = '';
-                this.fecha_venta = '';
-                this.total = 0.0;
-                this.id_producto = 0;
-                this.producto = '';
-                this.cantidad = 0;
-                this.preciov = 0.0;
-                this.stock = 0;
-                this.arrayDetalle = [];
-                this.errorMsj = '';
-                this.respt='';
-                */
+      listado = 0, estudiante = "", curso = "", fecha = "", buscar = "", arrayApoderado = [], arrayInscripcion = [], relacion = "", arrayDetalle = [];
     },
     guardarInscripcion: function guardarInscripcion() {
       var me = this;
       axios.post("/Inscipcion/registrar", {
-        /*
-                  fecha : this.fecha_venta,
-                  monto : this.total,
-                  id_inscripcion: this.id_inscripcion,
-                  data : this.arrayDetalle
-                  */
         estudiante: this.estudiante,
         curso: this.curso,
-        fecha: this.fecha,
-        data: this.arrayInscripcion
+        //Asignacion curso Gestion
+        fecha: this.fecha //data: this.arrayApoderado,
+
       }).then(function (response) {
         me.respt = "Incripcion Registrada...!";
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    listar: function listar(buscar) {
+    listarInscripcion: function listarInscripcion(buscar) {
       var me = this;
-      /*
-      var url = "/apoderado?buscar=" + buscar;
-      axios
-        .get(url)
-        .then(function (response) {
-          me.arrayApoderado = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      */
-
       var url = "/inscripcion?buscar=" + buscar;
       axios.get(url).then(function (response) {
         me.arrayInscripcion = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    listarApoderado: function listarApoderado(buscar) {
+      var me = this;
+      var url = "/apoderado?buscar=" + buscar;
+      axios.get(url).then(function (response) {
+        me.arrayApoderado = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2188,7 +2175,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log("Component mounted.");
-    this.listar(this.buscar);
+    this.listarApoderado(this.buscar);
   }
 });
 
@@ -2205,7 +2192,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
 //
 //
 //
@@ -2266,18 +2252,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      response: ' ',
-      status: ' ',
-      submitted: false,
-      stripeKey: process.env.VUE_APP_MYSTRIPEKEY,
-      url: process.env.VUE_APP_URL,
       id_apoderado: 0,
       nombre: '',
       apellidos: '',
       telefono: '',
       relacion: '',
       buscar: '',
-      guardarApoderado: '',
       arrayApoderado: []
     };
   },
@@ -38226,9 +38206,48 @@ var render = function() {
                         domProps: { textContent: _vm._s(apoderado.telefono) }
                       }),
                       _vm._v(" "),
-                      _c("td", {
-                        domProps: { textContent: _vm._s(apoderado.relacion) }
-                      })
+                      _c("td", [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.relacion,
+                                expression: "relacion"
+                              }
+                            ],
+                            attrs: { name: "relacion_name", id: "relacion_id" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.relacion = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "Padre" } }, [
+                              _vm._v("Padre")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Madre" } }, [
+                              _vm._v("Madre")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td")
                     ])
                   }),
                   0
@@ -38335,12 +38354,6 @@ var render = function() {
                     _c("td", {
                       domProps: {
                         textContent: _vm._s(inscripcion.id_estudiante)
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("td", {
-                      domProps: {
-                        textContent: _vm._s(inscripcion.id_apoderado)
                       }
                     })
                   ])
@@ -38821,7 +38834,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { attrs: { border: "1" } }, [
+    return _c("table", { attrs: { border: "3" } }, [
       _c("thead", [
         _c("th", [_vm._v("Id")]),
         _vm._v(" "),
