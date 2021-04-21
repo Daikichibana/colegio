@@ -18,6 +18,9 @@
                         <li @click="menu=1">
                             <a href="#" class="nav-link">Inscripcion</a>
                         </li>
+                        <li @click="menu=2">
+                            <a class="nav-link" href="#">Apoderado</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -27,6 +30,9 @@
             </template>
             <template v-if="menu==1">
                 <frminscripcion></frminscripcion>
+            </template>
+            <template v-if="menu==2">
+                <frmapoderado></frmapoderado>
             </template>
         </div>
     </div>
