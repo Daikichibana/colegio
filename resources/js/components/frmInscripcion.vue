@@ -48,11 +48,13 @@
           <tr>
             <a
               href="#"
-              @click="frmAgregarApoderado()"
+              @click="frmBuscarApoderado()"
               data-toggle="modal"
               data-target="#modalApoderado"
               >Agregar Apoderado</a
             >
+          </tr>
+          <tr>
           </tr>
         </table>
 
@@ -71,6 +73,7 @@
               <td v-text="apoderado.nombre"></td>
               <td v-text="apoderado.apellidos"></td>
               <td v-text="apoderado.telefono"></td>
+<<<<<<< HEAD
               <td>
                 <select
                   name="relacion_name"
@@ -82,6 +85,17 @@
                 </select>
               </td>
               <td></td>
+=======
+              <td v-text="apoderado.relacion"></td>
+              <td>
+                <a
+                  href="#"
+                  data-dismiss="modal"
+                  @click="seleccionarApoderado(apoderado)"
+                  >Seleccionar</a
+                >
+              </td>
+>>>>>>> c6c362418bdfa2ab4a6d370b65e108d65a8ed766
             </tr>
           </tbody>
         </table>
@@ -259,13 +273,55 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Busqueda de Apoderado</h4>
-            <button type="button" data-dismiss="modal">x</button>
+            <button type="button" @click="cerrarModal()" data-dismiss="modal">
+              x
+            </button>
           </div>
           <div class="modal-body">
+            <div class="form-group row">
+              <div class="col-md-8">
+                <div class="input-group">
+                  <input type="text" v-model="buscar" placeholder="Nombre" />
+                  <button type="button" @click="listar(buscar)"> Buscar </button>
+                 
+                  <table border="1">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Telefono</th>
+                        <th>Relacion</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="apoderado in arrayApoderado"
+                        :key="apoderado.id"
+                      >
+                        <td v-text="apoderado.id"></td>
+                        <td v-text="apoderado.nombre"></td>
+                        <td v-text="apoderado.apellidos"></td>
+                        <td v-text="apoderado.telefono"></td>
+                        <td v-text="apoderado.relacion"></td>
+                        <td>
+                          <a
+                            href="#"
+                            data-dismiss="modal"
+                            @click="seleccionarApoderado(apoderado)"
+                            >Seleccionar</a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
             <!-- Aqui va su codigo -->
           </div>
           <div class="modal-footer">
-            <button type="button" data-dismiss="modal">Cerrar</button>
+            <button type="button" data-dismiss="modal" @click="cerrarModal()">Cerrar</button>
           </div>
         </div>
       </div>
@@ -283,6 +339,9 @@ export default {
       curso: "",
       fecha: "",
       buscar: "",
+      buscarA: "",
+      apoderado: "",
+      id_apoderado: 0,
       arrayApoderado: [],
       arrayInscripcion: [],
       relacion: "",
@@ -290,6 +349,34 @@ export default {
     };
   },
   methods: {
+    listar(buscar) {
+      this.arrayApoderado = [];
+      this.buscarA = "";
+       let me=this;
+                var url='/apoderado?buscar='+buscar;
+                axios.get(url).then(function(response){
+                    me.arrayApoderado=response.data;
+                })
+                .catch(function(error){
+                    console:log(error);
+                });
+    },
+    buscarApoderado(buscar) {
+      let me = this;
+      var url = "/apoderado/selectApoderado?filtro=" + buscar;
+      axios
+        .get(url)
+        .then(function (response) {
+          me.arrayApoderado = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    seleccionarApoderado(dat = []) {
+      this.id_apoderado = data['id'];
+      this.apoderado = data['nombre'] + '' + data['apellidos'] ;
+    },
     nuevo() {
       (listado = 0),
         (estudiante = ""),
@@ -301,6 +388,7 @@ export default {
         (relacion = ""),
         (arrayDetalle = []);
     },
+
     guardarInscripcion() {
       let me = this;
       axios

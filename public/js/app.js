@@ -2118,6 +2118,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+>>>>>>> c6c362418bdfa2ab4a6d370b65e108d65a8ed766
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2126,6 +2175,9 @@ __webpack_require__.r(__webpack_exports__);
       curso: "",
       fecha: "",
       buscar: "",
+      buscarA: "",
+      apoderado: "",
+      id_apoderado: 0,
       arrayApoderado: [],
       arrayInscripcion: [],
       relacion: "",
@@ -2133,6 +2185,31 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    listar: function listar(buscar) {
+      this.arrayApoderado = [];
+      this.buscarA = "";
+      var me = this;
+      var url = '/apoderado?buscar=' + buscar;
+      axios.get(url).then(function (response) {
+        me.arrayApoderado = response.data;
+      })["catch"](function (error) {
+        console: log(error);
+      });
+    },
+    buscarApoderado: function buscarApoderado(buscar) {
+      var me = this;
+      var url = "/apoderado/selectApoderado?filtro=" + buscar;
+      axios.get(url).then(function (response) {
+        me.arrayApoderado = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    seleccionarApoderado: function seleccionarApoderado() {
+      var dat = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      this.id_apoderado = data['id'];
+      this.apoderado = data['nombre'] + '' + data['apellidos'];
+    },
     nuevo: function nuevo() {
       listado = 0, estudiante = "", curso = "", fecha = "", buscar = "", arrayApoderado = [], arrayInscripcion = [], relacion = "", arrayDetalle = [];
     },
@@ -2141,9 +2218,14 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/Inscipcion/registrar", {
         estudiante: this.estudiante,
         curso: this.curso,
+<<<<<<< HEAD
         //Asignacion curso Gestion
         fecha: this.fecha //data: this.arrayApoderado,
 
+=======
+        fecha: this.fecha,
+        data: this.arrayApoderado
+>>>>>>> c6c362418bdfa2ab4a6d370b65e108d65a8ed766
       }).then(function (response) {
         me.respt = "Incripcion Registrada...!";
       })["catch"](function (error) {
@@ -2192,10 +2274,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+<<<<<<< HEAD
 //
 //
 //
 //
+=======
+>>>>>>> c6c362418bdfa2ab4a6d370b65e108d65a8ed766
 //
 //
 //
@@ -2256,7 +2341,6 @@ __webpack_require__.r(__webpack_exports__);
       nombre: '',
       apellidos: '',
       telefono: '',
-      relacion: '',
       buscar: '',
       arrayApoderado: []
     };
@@ -2270,27 +2354,25 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console: log(error);
       });
+    },
+    guardar: function guardar() {
+      var me = this;
+      axios.post('/apoderado/registrar', {
+        nombre: this.nombre,
+        apellidos: this.apellidos,
+        telefono: this.telefono
+      }).then(function (error) {
+        me.listar('');
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    nuevo: function nuevo() {
+      this.nombre = '';
+      this.apellidos = '';
+      this.telefono = '';
+      this.buscar = '';
     }
-  },
-  guardarApoderado: function guardarApoderado() {
-    var me = this;
-    axios.post('/apoderado/registrar', {
-      nombre: this.nombre,
-      apellidos: this.apellidos,
-      telefono: this.telefono,
-      relacion: this.relacion
-    }).then(function (error) {
-      me.listarApoderado();
-    })["catch"](function (error) {
-      console.log(error);
-    });
-  },
-  nuevo: function nuevo() {
-    this.nombre = '';
-    this.apellidos = '';
-    this.telefono = '';
-    this.relacion = '';
-    this.buscar = '';
   },
   mounted: function mounted() {
     this.listar(this.buscar);
@@ -38174,13 +38256,15 @@ var render = function() {
                       },
                       on: {
                         click: function($event) {
-                          return _vm.frmAgregarApoderado()
+                          return _vm.frmBuscarApoderado()
                         }
                       }
                     },
                     [_vm._v("Agregar Apoderado")]
                   )
-                ])
+                ]),
+                _vm._v(" "),
+                _c("tr")
               ]),
               _vm._v(" "),
               _c("table", { attrs: { border: "1" } }, [
@@ -38206,6 +38290,7 @@ var render = function() {
                         domProps: { textContent: _vm._s(apoderado.telefono) }
                       }),
                       _vm._v(" "),
+<<<<<<< HEAD
                       _c("td", [
                         _c(
                           "select",
@@ -38248,6 +38333,26 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("td")
+=======
+                      _c("td", {
+                        domProps: { textContent: _vm._s(apoderado.relacion) }
+                      }),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#", "data-dismiss": "modal" },
+                            on: {
+                              click: function($event) {
+                                return _vm.seleccionarApoderado(apoderado)
+                              }
+                            }
+                          },
+                          [_vm._v("Seleccionar")]
+                        )
+                      ])
+>>>>>>> c6c362418bdfa2ab4a6d370b65e108d65a8ed766
                     ])
                   }),
                   0
@@ -38370,7 +38475,161 @@ var render = function() {
       _vm._v(" "),
       _vm._m(5),
       _vm._v(" "),
-      _vm._m(6)
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { display: "none" },
+          attrs: {
+            id: "modalApoderado",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "myModalLabel",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c("div", { staticClass: "modal-dialog modal-primary modal-lg" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h4", { staticClass: "modal-title" }, [
+                  _vm._v("Busqueda de Apoderado")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal()
+                      }
+                    }
+                  },
+                  [_vm._v("\n            x\n          ")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-md-8" }, [
+                    _c("div", { staticClass: "input-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.buscar,
+                            expression: "buscar"
+                          }
+                        ],
+                        attrs: { type: "text", placeholder: "Nombre" },
+                        domProps: { value: _vm.buscar },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.buscar = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.listar(_vm.buscar)
+                            }
+                          }
+                        },
+                        [_vm._v(" Buscar ")]
+                      ),
+                      _vm._v(" "),
+                      _c("table", { attrs: { border: "1" } }, [
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.arrayApoderado, function(apoderado) {
+                            return _c("tr", { key: apoderado.id }, [
+                              _c("td", {
+                                domProps: { textContent: _vm._s(apoderado.id) }
+                              }),
+                              _vm._v(" "),
+                              _c("td", {
+                                domProps: {
+                                  textContent: _vm._s(apoderado.nombre)
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("td", {
+                                domProps: {
+                                  textContent: _vm._s(apoderado.apellidos)
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("td", {
+                                domProps: {
+                                  textContent: _vm._s(apoderado.telefono)
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("td", {
+                                domProps: {
+                                  textContent: _vm._s(apoderado.relacion)
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: "#",
+                                      "data-dismiss": "modal"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.seleccionarApoderado(
+                                          apoderado
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Seleccionar")]
+                                )
+                              ])
+                            ])
+                          }),
+                          0
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cerrarModal()
+                      }
+                    }
+                  },
+                  [_vm._v("Cerrar")]
+                )
+              ])
+            ])
+          ])
+        ]
+      )
     ],
     2
   )
@@ -38560,47 +38819,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        staticStyle: { display: "none" },
-        attrs: {
-          id: "modalApoderado",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "myModalLabel",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c("div", { staticClass: "modal-dialog modal-primary modal-lg" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-header" }, [
-              _c("h4", { staticClass: "modal-title" }, [
-                _vm._v("Busqueda de Apoderado")
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                { attrs: { type: "button", "data-dismiss": "modal" } },
-                [_vm._v("x")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-footer" }, [
-              _c(
-                "button",
-                { attrs: { type: "button", "data-dismiss": "modal" } },
-                [_vm._v("Cerrar")]
-              )
-            ])
-          ])
-        ])
-      ]
-    )
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Id")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Apellidos")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Telefono")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Relacion")])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -38628,7 +38859,7 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("h3", [_vm._v("Apoderado")]),
     _vm._v(" "),
-    _c("form", { attrs: { action: "", method: "POST" } }, [
+    _c("form", { attrs: { action: "/apoderado/", method: "POST" } }, [
       _c("table", [
         _c("tr", [
           _c("td", [_vm._v("Nombre")]),
@@ -38712,33 +38943,6 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("tr", [
-          _c("td", [_vm._v("Relacion")]),
-          _vm._v(" "),
-          _c("td", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.relacion,
-                  expression: "relacion"
-                }
-              ],
-              attrs: { type: "text", placeholder: "Relacion" },
-              domProps: { value: _vm.relacion },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.relacion = $event.target.value
-                }
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
           _c("td", { attrs: { colspan: "3" } }, [
             _c(
               "button",
@@ -38759,7 +38963,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    return _vm.guardarApoderado()
+                    return _vm.guardar()
                   }
                 }
               },
@@ -38796,11 +39000,11 @@ var render = function() {
           attrs: { type: "button" },
           on: {
             click: function($event) {
-              return _vm.listar()
+              return _vm.listar(_vm.buscar)
             }
           }
         },
-        [_vm._v(" Buscar por Nombre")]
+        [_vm._v(" Buscar ")]
       )
     ]),
     _vm._v(" "),
@@ -38808,25 +39012,27 @@ var render = function() {
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "tbody",
-      _vm._l(_vm.arrayApoderado, function(apoderado) {
-        return _c("tr", { key: apoderado.id }, [
-          _c("td", { domProps: { textContent: _vm._s(apoderado.id) } }),
-          _vm._v(" "),
-          _c("td", { domProps: { textContent: _vm._s(apoderado.nombre) } }),
-          _vm._v(" "),
-          _c("td", { domProps: { textContent: _vm._s(apoderado.apellidos) } }),
-          _vm._v(" "),
-          _c("td", { domProps: { textContent: _vm._s(apoderado.telefono) } }),
-          _vm._v(" "),
-          _c("td", { domProps: { textContent: _vm._s(apoderado.relacion) } })
-        ])
-      }),
-      0
-    )
+    _c("table", { attrs: { border: "3" } }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.arrayApoderado, function(apoderado) {
+          return _c("tr", { key: apoderado.id }, [
+            _c("td", { domProps: { textContent: _vm._s(apoderado.id) } }),
+            _vm._v(" "),
+            _c("td", { domProps: { textContent: _vm._s(apoderado.nombre) } }),
+            _vm._v(" "),
+            _c("td", {
+              domProps: { textContent: _vm._s(apoderado.apellidos) }
+            }),
+            _vm._v(" "),
+            _c("td", { domProps: { textContent: _vm._s(apoderado.telefono) } })
+          ])
+        }),
+        0
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -38834,6 +39040,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+<<<<<<< HEAD
     return _c("table", { attrs: { border: "3" } }, [
       _c("thead", [
         _c("th", [_vm._v("Id")]),
@@ -38846,6 +39053,16 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Relacion")])
       ])
+=======
+    return _c("thead", [
+      _c("th", [_vm._v("Id")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Nombre")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Apellidos")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Telefono")])
+>>>>>>> c6c362418bdfa2ab4a6d370b65e108d65a8ed766
     ])
   }
 ]
