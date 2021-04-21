@@ -2,7 +2,7 @@
 <div class="container">
    
  <h3>Apoderado</h3>
- <form action="" method="POST">
+ <form action="/apoderado/" method="POST">
  <table>
      <tr>
          <td>Nombre</td>
@@ -17,19 +17,15 @@
          <td><input type="text" v-model="telefono" placeholder="Telefono"></td>
      </tr>
      <tr>
-         <td>Relacion</td>
-         <td><input type="text" v-model="relacion" placeholder="Relacion"></td>
-     </tr>
-     <tr>
          <td colspan="3">
              <button type="button" @click="nuevo()">Nuevo</button>
-             <button type="button" @click="guardarApoderado()">Guardar</button>
+             <button type="button" @click="guardar()">Guardar</button>
            
          </td>
      </tr>
  </table>
  <input type="text" v-model="buscar" placeholder="Nombre">
- <button type="button" @click="listar()"> Buscar por Nombre</button>
+ <button type="button" @click="listar(buscar)"> Buscar </button>
  </form>
  <br>
  <br>
@@ -39,18 +35,18 @@
          <th>Nombre</th>
          <th>Apellidos</th>
          <th>Telefono</th>
-         <th>Relacion</th>
      </thead>
- </table>
- <tbody>
+     <tbody>
      <tr v-for="apoderado in arrayApoderado" :key="apoderado.id">
          <td v-text="apoderado.id"></td>
          <td v-text="apoderado.nombre"></td>
          <td v-text="apoderado.apellidos"></td>
          <td v-text="apoderado.telefono"></td>
-        <td v-text="apoderado.relacion"></td>
+        <!-- <td v-text="apoderado.relacion"></td>-->
      </tr>
  </tbody>
+ </table>
+ 
   
     </div>
     </template>
@@ -63,7 +59,6 @@
                 nombre:'',
                 apellidos:'',
                 telefono:'',
-                relacion:'',
                 buscar:'',
                 arrayApoderado:[]
             }
@@ -78,31 +73,29 @@
                 .catch(function(error){
                     console:log(error);
                 });
-            }
-        },
-        
-         guardarApoderado(){
+            },
+            guardar(){
                 let me = this;
                 axios.post('/apoderado/registrar',{
                     
                     nombre : this.nombre,
                     apellidos : this.apellidos,
                     telefono: this.telefono,
-                    relacion: this.relacion
+                  
                  
                 }).then(function (error) {
-                    me.listarApoderado();
+                    me.listar('');
                 }).catch(function (error) {
                     console.log(error);
                 });   
-         },
-         nuevo(){
-             this.nombre='';
-             this.apellidos='';
-             this.telefono='';
-             this.relacion='';
-             this.buscar='';
-         },
+            },         
+            nuevo(){
+                this.nombre='';
+                this.apellidos='';
+                this.telefono='';
+                this.buscar='';
+            }
+        },
         mounted(){
             this.listar(this.buscar);
         }

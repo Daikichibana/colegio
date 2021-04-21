@@ -2087,11 +2087,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
-//
-//
-//
-//
 //
 //
 //
@@ -2148,18 +2143,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      response: ' ',
-      status: ' ',
-      submitted: false,
-      stripeKey: process.env.VUE_APP_MYSTRIPEKEY,
-      url: process.env.VUE_APP_URL,
       id_apoderado: 0,
       nombre: '',
       apellidos: '',
       telefono: '',
-      relacion: '',
       buscar: '',
-      guardarApoderado: '',
       arrayApoderado: []
     };
   },
@@ -2172,27 +2160,25 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console: log(error);
       });
+    },
+    guardar: function guardar() {
+      var me = this;
+      axios.post('/apoderado/registrar', {
+        nombre: this.nombre,
+        apellidos: this.apellidos,
+        telefono: this.telefono
+      }).then(function (error) {
+        me.listar('');
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    nuevo: function nuevo() {
+      this.nombre = '';
+      this.apellidos = '';
+      this.telefono = '';
+      this.buscar = '';
     }
-  },
-  guardarApoderado: function guardarApoderado() {
-    var me = this;
-    axios.post('/apoderado/registrar', {
-      nombre: this.nombre,
-      apellidos: this.apellidos,
-      telefono: this.telefono,
-      relacion: this.relacion
-    }).then(function (error) {
-      me.listarApoderado();
-    })["catch"](function (error) {
-      console.log(error);
-    });
-  },
-  nuevo: function nuevo() {
-    this.nombre = '';
-    this.apellidos = '';
-    this.telefono = '';
-    this.relacion = '';
-    this.buscar = '';
   },
   mounted: function mounted() {
     this.listar(this.buscar);
@@ -38392,7 +38378,7 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("h3", [_vm._v("Apoderado")]),
     _vm._v(" "),
-    _c("form", { attrs: { action: "", method: "POST" } }, [
+    _c("form", { attrs: { action: "/apoderado/", method: "POST" } }, [
       _c("table", [
         _c("tr", [
           _c("td", [_vm._v("Nombre")]),
@@ -38476,33 +38462,6 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("tr", [
-          _c("td", [_vm._v("Relacion")]),
-          _vm._v(" "),
-          _c("td", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.relacion,
-                  expression: "relacion"
-                }
-              ],
-              attrs: { type: "text", placeholder: "Relacion" },
-              domProps: { value: _vm.relacion },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.relacion = $event.target.value
-                }
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
           _c("td", { attrs: { colspan: "3" } }, [
             _c(
               "button",
@@ -38523,7 +38482,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    return _vm.guardarApoderado()
+                    return _vm.guardar()
                   }
                 }
               },
@@ -38560,11 +38519,11 @@ var render = function() {
           attrs: { type: "button" },
           on: {
             click: function($event) {
-              return _vm.listar()
+              return _vm.listar(_vm.buscar)
             }
           }
         },
-        [_vm._v(" Buscar por Nombre")]
+        [_vm._v(" Buscar ")]
       )
     ]),
     _vm._v(" "),
@@ -38572,25 +38531,27 @@ var render = function() {
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "tbody",
-      _vm._l(_vm.arrayApoderado, function(apoderado) {
-        return _c("tr", { key: apoderado.id }, [
-          _c("td", { domProps: { textContent: _vm._s(apoderado.id) } }),
-          _vm._v(" "),
-          _c("td", { domProps: { textContent: _vm._s(apoderado.nombre) } }),
-          _vm._v(" "),
-          _c("td", { domProps: { textContent: _vm._s(apoderado.apellidos) } }),
-          _vm._v(" "),
-          _c("td", { domProps: { textContent: _vm._s(apoderado.telefono) } }),
-          _vm._v(" "),
-          _c("td", { domProps: { textContent: _vm._s(apoderado.relacion) } })
-        ])
-      }),
-      0
-    )
+    _c("table", { attrs: { border: "3" } }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.arrayApoderado, function(apoderado) {
+          return _c("tr", { key: apoderado.id }, [
+            _c("td", { domProps: { textContent: _vm._s(apoderado.id) } }),
+            _vm._v(" "),
+            _c("td", { domProps: { textContent: _vm._s(apoderado.nombre) } }),
+            _vm._v(" "),
+            _c("td", {
+              domProps: { textContent: _vm._s(apoderado.apellidos) }
+            }),
+            _vm._v(" "),
+            _c("td", { domProps: { textContent: _vm._s(apoderado.telefono) } })
+          ])
+        }),
+        0
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -38598,18 +38559,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { attrs: { border: "1" } }, [
-      _c("thead", [
-        _c("th", [_vm._v("Id")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Nombre")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Apellidos")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Telefono")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Relacion")])
-      ])
+    return _c("thead", [
+      _c("th", [_vm._v("Id")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Nombre")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Apellidos")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Telefono")])
     ])
   }
 ]

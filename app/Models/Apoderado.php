@@ -12,7 +12,7 @@ class Apoderado extends Model
         'nombre',
         'apellidos',
         'telefono',
-        'relacion'
+       
     ];
     public $timestamps=false;
 }
