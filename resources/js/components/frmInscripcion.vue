@@ -71,13 +71,58 @@
               <td v-text="apoderado.nombre"></td>
               <td v-text="apoderado.apellidos"></td>
               <td v-text="apoderado.telefono"></td>
-              <td v-text="apoderado.relacion"></td>
+              <td>
+                <select
+                  name="relacion_name"
+                  id="relacion_id"
+                  v-model="relacion"
+                >
+                  <option value="Padre">Padre</option>
+                  <option value="Madre">Madre</option>
+                </select>
+              </td>
+              <td></td>
             </tr>
           </tbody>
         </table>
 
+        <!-- Detalle Inscripcion -->
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Opcion</th>
+              <th>nombre</th>
+              <th>apellido</th>
+              <th>telefono</th>
+              <th>direccion</th>
+              <th>direccion</th>
+            </tr>
+          </thead>
+          <tbody v-if="arrayDetalle.length">
+            <tr v-for="(detalle, index) in arrayDetalle" :key="detalle.id">
+              <td v-text="detalle.producto"></td>
+              <td v-text="detalle.precio"></td>
+              <td>
+                <span
+                  style="color: red"
+                  v-show="detalle.cantidad > detalle.stock"
+                  >Stock: {{ detalle.stock }}</span
+                >
+                <input type="number" v-model="detalle.cantidad" />
+              </td>
+              <td>
+                {{ (detalle.preciov = detalle.precio * detalle.cantidad) }}
+              </td>
+            </tr>
+            <tr style="background-color: #ceecf5">
+              <td colspan="4" align="right"><strong>Total Neto: bs</strong></td>
+              <td>{{ (total = calcularTotal) }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Botones -->
         <table>
-          <!-- Botones -->
           <tr>
             <td colspan="3">
               <button type="button" @click="nuevo()">Nuevo</button>
@@ -114,7 +159,6 @@
             <td v-text="inscripcion.fechaInscripcion"></td>
             <td v-text="inscripcion.id_aCursoGestion"></td>
             <td v-text="inscripcion.id_estudiante"></td>
-            <td v-text="inscripcion.id_apoderado"></td>
           </tr>
         </tbody>
       </table>
@@ -199,7 +243,7 @@
         </div>
       </div>
     </div>
-    <!-- Fin Modal frmBuscarApoderado -->
+    <!-- Fin Modal frmBuscarNota -->
 
     <!-- Inicio Modal frmBuscarApoderado -->
     <div
@@ -241,40 +285,30 @@ export default {
       buscar: "",
       arrayApoderado: [],
       arrayInscripcion: [],
+      relacion: "",
+      arrayDetalle: [],
     };
   },
   methods: {
     nuevo() {
-      /*
-                this.id_inscripcion = 0;
-                this.inscripcion = '';
-                this.fecha_venta = '';
-                this.total = 0.0;
-                this.id_producto = 0;
-                this.producto = '';
-                this.cantidad = 0;
-                this.preciov = 0.0;
-                this.stock = 0;
-                this.arrayDetalle = [];
-                this.errorMsj = '';
-                this.respt='';
-                */
+      (listado = 0),
+        (estudiante = ""),
+        (curso = ""),
+        (fecha = ""),
+        (buscar = ""),
+        (arrayApoderado = []),
+        (arrayInscripcion = []),
+        (relacion = ""),
+        (arrayDetalle = []);
     },
     guardarInscripcion() {
       let me = this;
       axios
         .post("/Inscipcion/registrar", {
-          /*
-                    fecha : this.fecha_venta,
-                    monto : this.total,
-                    id_inscripcion: this.id_inscripcion,
-                    data : this.arrayDetalle
-                    */
-
           estudiante: this.estudiante,
-          curso: this.curso,
+          curso: this.curso, //Asignacion curso Gestion
           fecha: this.fecha,
-          data: this.arrayApoderado,
+          //data: this.arrayApoderado,
         })
         .then(function (response) {
           me.respt = "Incripcion Registrada...!";
@@ -306,7 +340,6 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-     
     },
     buscarInscripcion() {
       this.listado = 1;
@@ -315,7 +348,7 @@ export default {
   },
   mounted() {
     console.log("Component mounted.");
-    this.listar(this.buscar);
+    this.listarApoderado(this.buscar);
   },
 };
 </script>
