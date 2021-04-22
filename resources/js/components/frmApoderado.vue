@@ -1,4 +1,5 @@
 <template>
+<center>
 <div class="container">
    
  <h3>Apoderado</h3>
@@ -49,6 +50,7 @@
  
   
     </div>
+    </center>
     </template>
  
  <script>

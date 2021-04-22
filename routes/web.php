@@ -33,6 +33,7 @@ Route::post('/estudiante/registrar',[App\Http\Controllers\EstudianteController::
 //Route::get('/estudiante/selectEstudiante','EstudianteController@selectEstudiante');
 //Rutas para inscripcion
 
+// Ruta Inscripcion
 Route::get('/inscripcion', [App\Http\Controllers\InscripcionController::class, 'index']);
 Route::post('/inscripcion/registrar', [App\Http\Controllers\InscripcionController::class, 'store']);
 Route::get('/inscripcion/obtenerDetalles',[App\Http\Controllers\InscripcionController::class, 'obtenerDetalles']);

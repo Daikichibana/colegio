@@ -77,8 +77,9 @@ class InscripcionController extends Controller
         ->join('asignacioncursogestion','inscripcion.id_aCursoGestion', '=', 'asignacioncursogestion.id')
         ->join('curso','asignacioncursogestion.id_curso', '=', 'curso.id')
         ->join('gestion','asignacioncursogestion.id_gestion', '=', 'gestion.id')
+        ->join('paralelo','asignacioncursogestion.id_paralelo', '=', 'paralelo.id')
         ->select('inscripcion.id','inscripcion.fechaInscripcion','inscripcion.id_aCursoGestion as idCurso',
-        'curso.nombre as cursoNombre','gestion.nombre as cursoGestion','estudiante.id as idEstudiante',
+        'curso.nombre as cursoNombre', 'paralelo.nombre as cursoParalelo','gestion.nombre as cursoGestion','estudiante.id as idEstudiante',
         'estudiante.nombre as estudianteNombre', 'estudiante.apellidos as estudianteApellidos')
         ->where('inscripcion.id','=',$id)
         ->get();
