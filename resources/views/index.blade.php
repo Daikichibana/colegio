@@ -27,6 +27,9 @@
                         <li @click="menu=4">
                             <a class="nav-link" href="#">Buscar Notas</a>
                         </li>
+                        <li @click="menu=5">
+                            <a class="nav-link" href="#">Estudiante</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -45,6 +48,9 @@
             </template>
             <template v-if="menu==4">
                 <frmbuscarnotas></frmbuscarnotas>
+            </template>
+            <template v-if="menu==5">
+                <frmEstudiante></frmEstudiante>
             </template>
         </div>
     </div>

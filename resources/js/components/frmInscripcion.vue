@@ -8,9 +8,21 @@
             <td>Estudiante</td>
             <td>
               <input
-                type="text"
+                type="hidden"
                 v-model="idEstudiante"
                 placeholder="estudiante..."
+              />
+              <input
+                type="text"
+                v-model="estudianteNombre"
+                placeholder="estudiante nombre..."
+                readonly
+              />
+              <input
+                type="text"
+                v-model="estudianteApellidos"
+                placeholder="estudiante apellido..."
+                readonly
               />
             </td>
             <a
@@ -131,7 +143,9 @@
               "
             ></td>
             <td>
-              <a href="#" @click="modificarDetalle(inscripcion.id)">Seleccionar</a>
+              <a href="#" @click="modificarDetalle(inscripcion.id)"
+                >Seleccionar</a
+              >
             </td>
           </tr>
         </tbody>
@@ -156,6 +170,37 @@
           </div>
           <div class="modal-body">
             <!-- Aqui va su codigo -->
+            <form action="" method="$POST">
+              <input
+                type="text"
+                v-model="buscarEstudiante"
+                placeholder="Nombre Estudiante"
+              />
+              <button type="button" @click="listarEstudiante(buscarEstudiante)">
+                Buscar por Nombre
+              </button>
+            </form>
+            <table border="1">
+              <thead>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Direccion</th>
+                <th>Telefono</th>
+              </thead>
+              <tbody>
+                <tr v-for="estudiante in arrayEstudiante" :key="estudiante.id">
+                  <td v-text="estudiante.id"></td>
+                  <td v-text="estudiante.nombre"></td>
+                  <td v-text="estudiante.apellidos"></td>
+                  <td v-text="estudiante.direccion"></td>
+                  <td v-text="estudiante.telefono"></td>
+                  <td>
+                    <a href="#" @click="seleccionarEstudiante(estudiante)" data-dismiss="modal">Seleccionar</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Cerrar</button>
@@ -313,6 +358,9 @@ export default {
       idEstudiante: "",
       estudianteNombre: "",
       estudianteApellidos: "",
+      estudianteDireccion: "",
+      estudianteTelefono: "",
+      buscarEstudiante: "",
       arrayEstudiante: [],
       idCurso: "",
       cursoNombre: "",
@@ -354,6 +402,13 @@ export default {
         });
       }
     },
+    seleccionarEstudiante(data = []) {
+      this.idEstudiante = data["id"];
+      this.estudianteNombre = data["nombre"];
+      this.estudianteApellidos = data["apellidos"];
+      this.estudianteDireccion = data["direccion"];
+      this.estudianteTelefono = data["telefono"];
+    },
     encuentra(id) {
       var sw = 0;
       for (var i = 0; i < this.arrayDetalle.length; i++) {
@@ -378,6 +433,12 @@ export default {
       this.arrayApoderado = [];
       this.arrayInscripcion = [];
       this.arrayNotas = [];
+      (this.buscarEstudiante = ""),
+        (this.idEstudiante = ""),
+        (this.estudianteNombre = ""),
+        (this.estudianteApellidos = ""),
+        (this.estudianteDireccion = ""),
+        (this.estudianteTelefono = "");
       this.arrayEstudiante = [];
       this.relacion = "";
       this.arrayDetalle = [];
@@ -428,6 +489,7 @@ export default {
           console.log(error);
         });
     },
+
     listarCurso(buscar) {
       let me = this;
       var url = "/curso?buscar=" + buscar;
@@ -485,8 +547,7 @@ export default {
           me.fecha = arrayInscripcionT[0].fechaInscripcion;
           console.log(me);
           console.log(arrayInscripcionT.idEstudiantes);
-          console.log(typeof(arrayInscripcionT));
-
+          console.log(typeof arrayInscripcionT);
         })
         .catch(function (error) {
           console.log(error);
