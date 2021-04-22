@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EstudianteController;
 use App\Models\Apoderado;
 
 /*
@@ -22,6 +23,14 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// Ruta Estudiante
+Route::get('/estudiante',[App\Http\Controllers\EstudianteController::class, 'index']);
+Route::post('/estudiante/registrar',[App\Http\Controllers\EstudianteController::class, 'store']);//[EstudianteController::class, 'store']'
+
+//Route::put('/estudiante/modificar','EstudianteController@update');
+//Route::get('/estudiante','EstudianteController@index');
+//Route::put('/estudiante/eliminar','EstudianteController@delete');
+//Route::get('/estudiante/selectEstudiante','EstudianteController@selectEstudiante');
 //Rutas para inscripcion
 
 Route::get('/inscripcion', [App\Http\Controllers\InscripcionController::class, 'index']);
