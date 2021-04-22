@@ -1,4 +1,5 @@
 <template>
+<center>
     <div class='container'>
     <h3> Registro de Estudiantes </h3>
     <form action="" method="$POST">
@@ -50,6 +51,7 @@
         </tbody>
     </table>
     </div>
+    </center>
 </template>
 
 <script>

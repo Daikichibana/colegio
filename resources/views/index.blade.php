@@ -7,6 +7,16 @@
     <title>Inscripcion</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="css/app.css">
+    <style>
+        .masthead {
+            height: 100vh;
+            min-height: 500px;
+            background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -35,7 +45,28 @@
             </nav>
             <!-- Menu principal -->
             <template v-if="menu==0">
-                <b>Desarrollo de aplicaciones web</b>
+                        <!-- Full Page Image Header with Vertically Centered Content -->
+            <header class="masthead">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                <div class="col-12 text-center">
+                    <h1 class="font-weight-light">Aplicacion web para la gestion academica</h1>
+                    <p class="lead">Proyecto para la materia de desarrollo web</p>
+                </div>
+                </div>
+            </div>
+            </header>
+
+            <!-- Page Content -->
+            <section class="py-5">
+            <div class="container">
+                <h2 class="font-weight-light">Integrantes:</h2>
+                <p>Daiki Chibana</p>
+                <p>Mauricio Cuevas</p>
+                <p>Andreu Loayza</p>
+                <p>Miguel Rojas</p>
+            </div>
+            </section>
             </template>
             <template v-if="menu==1">
                 <frminscripcion></frminscripcion>
