@@ -9,7 +9,7 @@
             <td>
               <input
                 type="text"
-                v-model="estudiante"
+                v-model="idEstudiante"
                 placeholder="estudiante..."
               />
             </td>
@@ -24,7 +24,7 @@
           <tr>
             <td>Curso</td>
             <td>
-              <input type="text" v-model="curso" placeholder="curso..." />
+              <input type="text" v-model="idCurso" placeholder="curso..." />
             </td>
             <a
               href="#"
@@ -43,7 +43,7 @@
           </tr>
           <tr>
             <td>Fecha</td>
-            <td><input type="date" /></td>
+            <td><input type="date" v-model="fecha" /></td>
           </tr>
           <tr>
             <a
@@ -54,8 +54,7 @@
               >Agregar Apoderado</a
             >
           </tr>
-          <tr>
-          </tr>
+          <tr></tr>
         </table>
 
         <!-- Detalle Apoderados -->
@@ -67,70 +66,19 @@
             <th>Telefono</th>
             <th>Relacion</th>
           </thead>
-          <tbody>
-            <tr v-for="apoderado in arrayApoderado" :key="apoderado.id">
-              <td v-text="apoderado.id"></td>
-              <td v-text="apoderado.nombre"></td>
-              <td v-text="apoderado.apellidos"></td>
-              <td v-text="apoderado.telefono"></td>
-<<<<<<< HEAD
-              <td>
-                <select
-                  name="relacion_name"
-                  id="relacion_id"
-                  v-model="relacion"
-                >
-                  <option value="Padre">Padre</option>
-                  <option value="Madre">Madre</option>
-                </select>
-              </td>
-              <td></td>
-=======
-              <td v-text="apoderado.relacion"></td>
-              <td>
-                <a
-                  href="#"
-                  data-dismiss="modal"
-                  @click="seleccionarApoderado(apoderado)"
-                  >Seleccionar</a
-                >
-              </td>
->>>>>>> c6c362418bdfa2ab4a6d370b65e108d65a8ed766
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Detalle Inscripcion -->
-        <table border="1">
-          <thead>
-            <tr>
-              <th>Opcion</th>
-              <th>nombre</th>
-              <th>apellido</th>
-              <th>telefono</th>
-              <th>direccion</th>
-              <th>direccion</th>
-            </tr>
-          </thead>
           <tbody v-if="arrayDetalle.length">
             <tr v-for="(detalle, index) in arrayDetalle" :key="detalle.id">
-              <td v-text="detalle.producto"></td>
-              <td v-text="detalle.precio"></td>
+              <td><a href="#" @click="eliminarDetalle(index)">Quitar</a></td>
+              <td v-text="detalle.apoderadoNombre"></td>
+              <td v-text="detalle.apoderadoApellidos"></td>
+              <td v-text="detalle.apoderadoTelefono"></td>
               <td>
-                <span
-                  style="color: red"
-                  v-show="detalle.cantidad > detalle.stock"
-                  >Stock: {{ detalle.stock }}</span
-                >
-                <input type="number" v-model="detalle.cantidad" />
+                <input
+                  type="text"
+                  placeholder="relacion..."
+                  v-model="detalle.relacion"
+                />
               </td>
-              <td>
-                {{ (detalle.preciov = detalle.precio * detalle.cantidad) }}
-              </td>
-            </tr>
-            <tr style="background-color: #ceecf5">
-              <td colspan="4" align="right"><strong>Total Neto: bs</strong></td>
-              <td>{{ (total = calcularTotal) }}</td>
             </tr>
           </tbody>
         </table>
@@ -143,12 +91,6 @@
               <button type="button" @click="guardarInscripcion()">
                 Guardar
               </button>
-              <button type="button" @click="modificarInscripcion()">
-                Modificar
-              </button>
-              <button type="button" @click="anularInscripcion()">
-                Eliminar
-              </button>
               <button type="button" @click="buscarInscripcion()">Buscar</button>
             </td>
           </tr>
@@ -159,20 +101,38 @@
     <!-- menu de buscar Inscripcion -->
     <template v-else-if="listado == 1">
       <!-- Buscar Inscripciones -->
+      <h3>Busqueda de Inscripciones</h3>
+      <input type="text" v-model="buscar" placeholder="Nombre Cliente" />
+      <button type="button" @click="listar(buscar)">Buscar</button>
+      <br />
+      <a href="#" @click="nuevo()">Volver</a>
+      <br />
+      <br />
       <table border="1">
         <thead>
           <th>Id</th>
           <th>fecha Inscripcion</th>
           <th>Curso</th>
+          <th>Gestion</th>
           <th>Estudiante</th>
-          <th>Apoderado</th>
+          <th>Opcion</th>
         </thead>
         <tbody>
           <tr v-for="inscripcion in arrayInscripcion" :key="inscripcion.id">
             <td v-text="inscripcion.id"></td>
             <td v-text="inscripcion.fechaInscripcion"></td>
-            <td v-text="inscripcion.id_aCursoGestion"></td>
-            <td v-text="inscripcion.id_estudiante"></td>
+            <td v-text="inscripcion.cursoNombre"></td>
+            <td v-text="inscripcion.cursoGestion"></td>
+            <td
+              v-text="
+                inscripcion.estudianteNombre +
+                ' ' +
+                inscripcion.estudianteApellidos
+              "
+            ></td>
+            <td>
+              <a href="#" @click="modificarDetalle(inscripcion.id)">Seleccionar</a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -273,17 +233,26 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Busqueda de Apoderado</h4>
-            <button type="button" @click="cerrarModal()" data-dismiss="modal">
-              x
-            </button>
+            <button type="button" data-dismiss="modal">x</button>
           </div>
           <div class="modal-body">
             <div class="form-group row">
               <div class="col-md-8">
                 <div class="input-group">
-                  <input type="text" v-model="buscar" placeholder="Nombre" />
-                  <button type="button" @click="listar(buscar)"> Buscar </button>
-                 
+                  <input
+                    type="text"
+                    v-model="buscarApoderado"
+                    placeholder="Nombre"
+                  />
+                  <button
+                    type="button"
+                    @click="listarApoderado(buscarApoderado)"
+                  >
+                    Buscar
+                  </button>
+                  <br />
+                  <br />
+                  <label for="" v-text="errorMsj"></label>
                   <table border="1">
                     <thead>
                       <tr>
@@ -291,7 +260,6 @@
                         <th>Nombre</th>
                         <th>Apellidos</th>
                         <th>Telefono</th>
-                        <th>Relacion</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -303,12 +271,8 @@
                         <td v-text="apoderado.nombre"></td>
                         <td v-text="apoderado.apellidos"></td>
                         <td v-text="apoderado.telefono"></td>
-                        <td v-text="apoderado.relacion"></td>
                         <td>
-                          <a
-                            href="#"
-                            data-dismiss="modal"
-                            @click="seleccionarApoderado(apoderado)"
+                          <a href="#" @click="seleccionarApoderado(apoderado)"
                             >Seleccionar</a
                           >
                         </td>
@@ -318,10 +282,9 @@
                 </div>
               </div>
             </div>
-            <!-- Aqui va su codigo -->
           </div>
           <div class="modal-footer">
-            <button type="button" data-dismiss="modal" @click="cerrarModal()">Cerrar</button>
+            <button type="button" data-dismiss="modal">cerrar</button>
           </div>
         </div>
       </div>
@@ -335,71 +298,143 @@ export default {
   data() {
     return {
       listado: 0,
-      estudiante: "",
-      curso: "",
       fecha: "",
       buscar: "",
-      buscarA: "",
+      errorMsj: "",
+      buscarApoderado: "",
       apoderado: "",
-      id_apoderado: 0,
+      idApoderado: 0,
+      apoderadoNombre: "",
+      apoderadoApellidos: "",
+      apoderadoTelefono: "",
       arrayApoderado: [],
       arrayInscripcion: [],
+      arrayNotas: [],
+      idEstudiante: "",
+      estudianteNombre: "",
+      estudianteApellidos: "",
+      arrayEstudiante: [],
+      idCurso: "",
+      cursoNombre: "",
+      cursoGestion: "",
+      arrayCurso: [],
       relacion: "",
       arrayDetalle: [],
     };
   },
   methods: {
-    listar(buscar) {
-      this.arrayApoderado = [];
-      this.buscarA = "";
-       let me=this;
-                var url='/apoderado?buscar='+buscar;
-                axios.get(url).then(function(response){
-                    me.arrayApoderado=response.data;
-                })
-                .catch(function(error){
-                    console:log(error);
-                });
+    frmBuscarEstudiante() {
+      this.arrayEstudiante = [];
+      this.buscarEstudiante = "";
     },
-    buscarApoderado(buscar) {
+    frmBuscarCurso() {
+      this.arrayCurso = [];
+      this.buscarCurso = "";
+    },
+    frmVerificarNotas() {
+      this.arrayNotas = [];
+      this.buscarNotas = "";
+    },
+    frmBuscarApoderado() {
+      this.arrayApoderado = [];
+      this.buscarApoderado = "";
+      this.errorMsj = "";
+    },
+    seleccionarApoderado(data = []) {
       let me = this;
-      var url = "/apoderado/selectApoderado?filtro=" + buscar;
+      if (me.encuentra(data["id"])) {
+        this.errorMsj = "Ya se encuentra agregado...";
+      } else {
+        me.arrayDetalle.push({
+          idApoderado: data["id"],
+          apoderadoNombre: data["nombre"],
+          apoderadoApellidos: data["apellidos"],
+          apoderadoTelefono: data["telefono"],
+          relacion: "",
+        });
+      }
+    },
+    encuentra(id) {
+      var sw = 0;
+      for (var i = 0; i < this.arrayDetalle.length; i++) {
+        if (this.arrayDetalle[i].idApoderado == id) {
+          sw = true;
+        }
+      }
+      return sw;
+    },
+    nuevo() {
+      this.listado = 0;
+      this.estudiante = "";
+      this.curso = "";
+      this.fecha = "";
+      this.buscar = "";
+      this.buscarApoderado = "";
+      this.apoderado = "";
+      this.idApoderado = 0;
+      this.apoderadoNombre = "";
+      this.apoderadoApellidos = "";
+      this.apoderadoTelefono = "";
+      this.arrayApoderado = [];
+      this.arrayInscripcion = [];
+      this.arrayNotas = [];
+      this.arrayEstudiante = [];
+      this.relacion = "";
+      this.arrayDetalle = [];
+    },
+    guardarInscripcion() {
+      let me = this;
       axios
-        .get(url)
+        .post("/inscripcion/registrar", {
+          fecha: this.fecha,
+          idCurso: this.idCurso, //Asignacion curso Gestion
+          idEstudiante: this.idEstudiante,
+          data: this.arrayDetalle,
+        })
         .then(function (response) {
-          me.arrayApoderado = response.data;
+          me.respt = "Incripcion Registrada...!";
         })
         .catch(function (error) {
           console.log(error);
         });
     },
-    seleccionarApoderado(dat = []) {
-      this.id_apoderado = data['id'];
-      this.apoderado = data['nombre'] + '' + data['apellidos'] ;
+    buscarInscripcion() {
+      this.listado = 1;
+      this.listar("");
     },
-    nuevo() {
-      (listado = 0),
-        (estudiante = ""),
-        (curso = ""),
-        (fecha = ""),
-        (buscar = ""),
-        (arrayApoderado = []),
-        (arrayInscripcion = []),
-        (relacion = ""),
-        (arrayDetalle = []);
-    },
-
-    guardarInscripcion() {
+    listar(buscar) {
       let me = this;
+      this.arrayInscripcion = [];
+
+      var url = "/inscripcion?buscar=" + buscar;
       axios
-        .post("/Inscipcion/registrar", {
-          estudiante: this.estudiante,
-          curso: this.curso, //Asignacion curso Gestion
-          fecha: this.fecha,
-          //data: this.arrayApoderado,
-        })
+        .get(url)
         .then(function (response) {
-          me.respt = "Incripcion Registrada...!";
+          me.arrayInscripcion = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    listarEstudiante(buscar) {
+      let me = this;
+      var url = "/estudiante?buscar=" + buscar;
+      axios
+        .get(url)
+        .then(function (response) {
+          me.arrayEstudiante = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    listarCurso(buscar) {
+      let me = this;
+      var url = "/curso?buscar=" + buscar;
+      axios
+        .get(url)
+        .then(function (response) {
+          me.arrayCurso = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -429,14 +464,48 @@ export default {
           console.log(error);
         });
     },
-    buscarInscripcion() {
-      this.listado = 1;
-      this.listar("");
+    modificarDetalle(id) {
+      let me = this;
+      me.listado = 0;
+      this.respt = "";
+      let arrayInscripcionT;
+      var url = "/inscripcion/obtenerCabecera?id=" + id;
+      axios
+        .get(url)
+        .then(function (response) {
+          arrayInscripcionT = response.data.inscripcion;
+
+          console.log(arrayInscripcionT);
+          me.idEstudiante = arrayInscripcionT[0].idEstudiante;
+          me.estudianteNombre = arrayInscripcionT[0].estudianteNombre;
+          me.estudianteApellidos = arrayInscripcionT[0].estudianteApellidos;
+          me.idCurso = arrayInscripcionT[0].idCurso;
+          me.cursoNombre = arrayInscripcionT[0].cursoNombre;
+          me.cursoGestion = arrayInscripcionT[0].cursoGestion;
+          me.fecha = arrayInscripcionT[0].fechaInscripcion;
+          console.log(me);
+          console.log(arrayInscripcionT.idEstudiantes);
+          console.log(typeof(arrayInscripcionT));
+
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      var url1 = "/inscripcion/obtenerDetalles?id=" + id;
+      axios
+        .get(url1)
+        .then(function (response) {
+          me.arrayDetalle = response.data.detalle;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
   },
   mounted() {
     console.log("Component mounted.");
-    this.listarApoderado(this.buscar);
+    //this.listarApoderado(this.buscar);
   },
 };
 </script>

@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inscripcion extends Model
 {
-    protected $table="Inscripcion";
+    protected $table="inscripcion";
     protected $fillable=[
-        'id_inscripcion',
+        'id',
         'fechaInscripcion',
         'id_aCursoGestion',
         'id_estudiante',
-        'id_apoderado'
     ];
-    public $timestamp=false;
+    public $timestamps=false;
 }

@@ -18,11 +18,9 @@ class CreateInscripcionTable extends Migration
             $table->date('fechaInscripcion');
             $table->unsignedBigInteger('id_aCursoGestion');
             $table->unsignedBigInteger('id_estudiante');
-            $table->unsignedBigInteger('id_apoderado');
 
             $table->foreign('id_estudiante')->references('id')->on('estudiante');
             $table->foreign('id_aCursoGestion')->references('id')->on('asignacioncursogestion');
-            $table->foreign('id_apoderado')->references('id')->on('apoderado');
         });
     }
 

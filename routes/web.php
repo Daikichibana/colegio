@@ -25,7 +25,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Rutas para inscripcion
 
 Route::get('/inscripcion', [App\Http\Controllers\InscripcionController::class, 'index']);
-Route::get('/inscripcion/registrar', [App\Http\Controllers\InscripcionController::class, 'store']);
+Route::post('/inscripcion/registrar', [App\Http\Controllers\InscripcionController::class, 'store']);
+Route::get('/inscripcion/obtenerDetalles',[App\Http\Controllers\InscripcionController::class, 'obtenerDetalles']);
+Route::get('/inscripcion/obtenerCabecera',[App\Http\Controllers\InscripcionController::class, 'obtenerCabecera']);
+
 //Rutas para apoderado
 Route::get('/apoderado', [App\Http\Controllers\ApoderadoController::class, 'index']);
 Route::post('/apoderado/registrar', [App\Http\Controllers\ApoderadoController::class, 'store']);
