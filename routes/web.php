@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\EstudianteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,13 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+// Ruta Estudiante
+Route::get('/estudiante',[App\Http\Controllers\EstudianteController::class, 'index']);
+Route::post('/estudiante/registrar',[App\Http\Controllers\EstudianteController::class, 'store']);//[EstudianteController::class, 'store']'
+Route::put('/estudiante/modificar','EstudianteController@update');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Route::get('/estudiante','EstudianteController@index');
+//Route::put('/estudiante/eliminar','EstudianteController@delete');
+//Route::get('/estudiante/selectEstudiante','EstudianteController@selectEstudiante');
