@@ -22,7 +22,7 @@
                             <a class="nav-link" href="#">Apoderado</a>
                         </li>
                         <li @click="menu=3">
-                            <a class="nav-link" href="#">Curso</a>
+                            <a class="nav-link" href="#">Buscar Curso</a>
                         </li>
                         <li @click="menu=4">
                             <a class="nav-link" href="#">Buscar Notas</a>

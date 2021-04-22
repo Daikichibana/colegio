@@ -2493,6 +2493,68 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -39952,9 +40014,300 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _vm._m(5),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { display: "none" },
+          attrs: {
+            id: "modalCurso",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "myModalLabel",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c("div", { staticClass: "modal-dialog modal-primary modal-lg" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(5),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-body" },
+                [
+                  _c("center", [
+                    _c("h3", [_vm._v("Busqueda de Cursos")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.buscarCurso,
+                          expression: "buscarCurso"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Ej: 1ro" },
+                      domProps: { value: _vm.buscarCurso },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.buscarCurso = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.listarCurso(_vm.buscarCurso)
+                          }
+                        }
+                      },
+                      [_vm._v("Buscar por Nombre")]
+                    ),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("table", { attrs: { border: "1" } }, [
+                      _c("thead", [
+                        _c("th", [_vm._v("ID")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Nombre")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Gestion")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Paralelo")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Opcion")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.arrayCurso, function(curso) {
+                          return _c("tr", { key: curso.id }, [
+                            _c("td", {
+                              domProps: { textContent: _vm._s(curso.id) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(curso.curso_nombre)
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(curso.gestion_nombre)
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(curso.paralelo_nombre)
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.seleccionarCurso(curso)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Seleccionar")]
+                              )
+                            ])
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm._m(6)
+            ])
+          ])
+        ]
+      ),
       _vm._v(" "),
-      _vm._m(6),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { display: "none" },
+          attrs: {
+            id: "modalNotas",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "myModalLabel",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c("div", { staticClass: "modal-dialog modal-primary modal-lg" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(7),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-body" },
+                [
+                  _c("center", [
+                    _c("h3", [_vm._v("Busqueda de Notas")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.buscarNota,
+                          expression: "buscarNota"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Nombre" },
+                      domProps: { value: _vm.buscarNota },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.buscarNota = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.apellido,
+                          expression: "apellido"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Apellido" },
+                      domProps: { value: _vm.apellido },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.apellido = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.listarNota(_vm.buscarNota, _vm.apellido)
+                          }
+                        }
+                      },
+                      [_vm._v("Buscar por Nombre")]
+                    ),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("table", { attrs: { border: "1" } }, [
+                      _c("thead", [
+                        _c("th", [_vm._v("Gestion")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Materia")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Ser")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Saber")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Hacer")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Decidir")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Suma")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.arrayNotas, function(notas) {
+                          return _c("tr", { key: notas.id }, [
+                            _c("td", {
+                              domProps: { textContent: _vm._s(notas.Gestion) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: { textContent: _vm._s(notas.Materia) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: { textContent: _vm._s(notas.nota_ser) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(notas.nota_saber)
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(notas.nota_hacer)
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(notas.nota_decidir)
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(
+                                  notas.nota_decidir +
+                                    notas.nota_ser +
+                                    notas.nota_saber +
+                                    notas.nota_hacer
+                                )
+                              }
+                            })
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm._m(8)
+            ])
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -39972,7 +40325,7 @@ var render = function() {
         [
           _c("div", { staticClass: "modal-dialog modal-primary modal-lg" }, [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(7),
+              _vm._m(9),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "form-group row" }, [
@@ -40022,7 +40375,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("table", { attrs: { border: "1" } }, [
-                        _vm._m(8),
+                        _vm._m(10),
                         _vm._v(" "),
                         _c(
                           "tbody",
@@ -40076,7 +40429,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(9)
+              _vm._m(11)
             ])
           ])
         ]
