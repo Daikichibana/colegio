@@ -2589,6 +2589,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2610,6 +2612,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       idEstudiante: "",
       estudianteNombre: "",
       estudianteApellidos: "",
+      estudianteNombre2: "",
+      estudianteApellidos2: "",
       estudianteDireccion: "",
       estudianteTelefono: "",
       buscarEstudiante: "",
@@ -2636,8 +2640,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     frmVerificarNotas: function frmVerificarNotas() {
       this.arrayNotas = [];
       this.buscarNotas = "";
-      this.estudianteNombre = "";
-      this.estudianteApellidos = "";
+      this.estudianteNombre2 = "";
+      this.estudianteApellidos2 = "";
     },
     frmBuscarApoderado: function frmBuscarApoderado() {
       this.arrayApoderado = [];
@@ -2726,6 +2730,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           console.log(error);
         });
       }
+
+      this.nuevo();
     },
     buscarInscripcion: function buscarInscripcion() {
       this.listado = 1;
@@ -40274,18 +40280,18 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.estudianteApellidos,
-                          expression: "estudianteApellidos"
+                          value: _vm.estudianteApellidos2,
+                          expression: "estudianteApellidos2"
                         }
                       ],
                       attrs: { type: "text", placeholder: "Apellido" },
-                      domProps: { value: _vm.estudianteApellidos },
+                      domProps: { value: _vm.estudianteApellidos2 },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.estudianteApellidos = $event.target.value
+                          _vm.estudianteApellidos2 = $event.target.value
                         }
                       }
                     }),
@@ -40298,7 +40304,7 @@ var render = function() {
                           click: function($event) {
                             return _vm.listarNota(
                               _vm.buscarNota,
-                              _vm.estudianteApellidos
+                              _vm.estudianteApellidos2
                             )
                           }
                         }
@@ -40314,6 +40320,8 @@ var render = function() {
                     _c("table", { attrs: { border: "1" } }, [
                       _c("thead", [
                         _c("th", [_vm._v("Gestion")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Curso")]),
                         _vm._v(" "),
                         _c("th", [_vm._v("Materia")]),
                         _vm._v(" "),
@@ -40334,6 +40342,12 @@ var render = function() {
                           return _c("tr", { key: notas.id }, [
                             _c("td", {
                               domProps: { textContent: _vm._s(notas.Gestion) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(notas.cursoNombre)
+                              }
                             }),
                             _vm._v(" "),
                             _c("td", {

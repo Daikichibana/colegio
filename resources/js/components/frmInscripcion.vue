@@ -304,12 +304,12 @@
               <input type="text" v-model="buscarNota" placeholder="Nombre" />
               <input
                 type="text"
-                v-model="estudianteApellidos"
+                v-model="estudianteApellidos2"
                 placeholder="Apellido"
               />
               <button
                 type="button"
-                @click="listarNota(buscarNota, estudianteApellidos)"
+                @click="listarNota(buscarNota, estudianteApellidos2)"
               >
                 Buscar por Nombre</button
               ><br />
@@ -319,6 +319,7 @@
               <table border="1">
                 <thead>
                   <th>Gestion</th>
+                  <th>Curso</th>
                   <th>Materia</th>
                   <th>Ser</th>
                   <th>Saber</th>
@@ -330,6 +331,7 @@
                   <tr v-for="notas in arrayNotas" :key="notas.id">
                     <!-- <td v-text="notas.id"></td> -->
                     <td v-text="notas.Gestion"></td>
+                    <td v-text="notas.cursoNombre"></td>
                     <td v-text="notas.Materia"></td>
                     <td v-text="notas.nota_ser"></td>
                     <td v-text="notas.nota_saber"></td>
@@ -454,6 +456,8 @@ export default {
       idEstudiante: "",
       estudianteNombre: "",
       estudianteApellidos: "",
+      estudianteNombre2: "",
+      estudianteApellidos2: "",
       estudianteDireccion: "",
       estudianteTelefono: "",
       buscarEstudiante: "",
@@ -480,8 +484,8 @@ export default {
     frmVerificarNotas() {
       this.arrayNotas = [];
       this.buscarNotas = "";
-      this.estudianteNombre = "";
-      this.estudianteApellidos = "";
+      this.estudianteNombre2 = "";
+      this.estudianteApellidos2 = "";
     },
     frmBuscarApoderado() {
       this.arrayApoderado = [];
@@ -570,6 +574,8 @@ export default {
           console.log(error);
         });
         }
+
+        this.nuevo();
     },
     buscarInscripcion() {
       this.listado = 1;

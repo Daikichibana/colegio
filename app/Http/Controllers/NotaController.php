@@ -26,6 +26,7 @@ class NotaController extends Controller
             ->join('asignacioncursogestion', 'id_acursogestion', '=', 'asignacioncursogestion.id')
             ->join('gestion', 'id_gestion', '=', 'gestion.id')
             ->join('materia', 'id_materia', '=', 'materia.id')
+            ->join('curso', 'id_curso', '=', 'curso.id')
             ->select('estudiante.nombre as Estudiante',
                     'estudiante.apellidos as Apellidos',
                     'materia.nombre as Materia',
@@ -33,10 +34,13 @@ class NotaController extends Controller
                     'nota.nota_ser',
                     'nota.nota_saber',
                     'nota.nota_hacer',
-                    'nota.nota_decidir')
+                    'nota.nota_decidir',
+                    'curso.nombre as cursoNombre')
             ->where('estudiante.nombre','like',$buscar.'%')
             ->where('estudiante.apellidos','like',$apellido.'%')
             ->get();
+
+            return $s;
         }
         // else{
         //     $s=DB::table('nota')
@@ -57,7 +61,7 @@ class NotaController extends Controller
         //             'nota.nota_decidir')
         //     ->get();
         // }
-        return $s;
+        return '';
     }
 
     /**
