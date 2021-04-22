@@ -19,4 +19,8 @@ class asignacionCursoGestion extends Model
         return $this->belongsTo(Paralelo::class, 'id_paralelo');
     }
 
+    public function materia(){
+        return $this->belongsToMany(Materia::class, 'asignacioncursomateria', 'id_acursogestion','id_materia');
+    }
+
 }

@@ -35,3 +35,6 @@ Route::post('/apoderado/registrar', [App\Http\Controllers\ApoderadoController::c
 
 //rutas buscar Curso
 Route::get('/frmbuscarcurso', [App\Http\Controllers\AsignacionCursoGestionController::class, 'index']);
+
+//rutas buscar Curso
+Route::get('/frmbuscarnotas', [App\Http\Controllers\NotaController::class, 'index']);

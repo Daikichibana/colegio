@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('frminscripcion', require('./components/frmInscripcion.vue').default);
 Vue.component('frmapoderado', require('./components/frmapoderado.vue').default);
 Vue.component('frmbuscarcurso', require('./components/frmBuscarCursoGestion.vue').default);
+Vue.component('frmbuscarnotas', require('./components/frmBuscarNotas.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
