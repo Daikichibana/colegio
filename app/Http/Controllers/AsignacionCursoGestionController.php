@@ -37,6 +37,7 @@ class AsignacionCursoGestionController extends Controller
                         'gestion.nombre as gestion_nombre',
                         'paralelo.nombre as paralelo_nombre'
                     )
+            ->orderBy('id', 'asc')
             ->get();
         }
 
@@ -51,6 +52,7 @@ class AsignacionCursoGestionController extends Controller
                          'paralelo.nombre as paralelo_nombre'
                      )
              ->where('curso.nombre','like','%'.$buscar.'%')
+             ->orderBy('id', 'asc')
              ->get();
         }
         return $s;

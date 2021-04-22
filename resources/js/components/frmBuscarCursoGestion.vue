@@ -3,7 +3,7 @@
         <template>
             <center>
                 <h3>Busqueda de Cursos</h3>
-                <input type="text" v-model="buscar" placeholder="Nombre">
+                <input type="text" v-model="buscar" placeholder="Ej: 1ro">
                 <button type="button" @click="listar(buscar)">Buscar por Nombre</button><br>
                 <a href="#" @click="mostrarDetalle()">Volver</a>
                 <br>

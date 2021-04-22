@@ -24,6 +24,9 @@
                         <li @click="menu=3">
                             <a class="nav-link" href="#">Curso</a>
                         </li>
+                        <li @click="menu=4">
+                            <a class="nav-link" href="#">Buscar Notas</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -39,6 +42,9 @@
             </template>
             <template v-if="menu==3">
                 <frmbuscarcurso></frmbuscarcurso>
+            </template>
+            <template v-if="menu==4">
+                <frmbuscarnotas></frmbuscarnotas>
             </template>
         </div>
     </div>
