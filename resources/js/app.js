@@ -22,6 +22,10 @@ window.Vue = require('vue').default;
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('frmestudiante', require('./components/frmEstudiante.vue').default);
 
+Vue.component('frminscripcion', require('./components/frmInscripcion.vue').default);
+Vue.component('frmapoderado', require('./components/frmapoderado.vue').default);
+Vue.component('frmbuscarcurso', require('./components/frmBuscarCursoGestion.vue').default);
+Vue.component('frmbuscarnotas', require('./components/frmBuscarNotas.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -30,7 +34,7 @@ Vue.component('frmestudiante', require('./components/frmEstudiante.vue').default
 
  const app = new Vue({
     el: '#app',
-    data : {
-        menu : 0
+    data:{
+        menu:0
     }
 });
