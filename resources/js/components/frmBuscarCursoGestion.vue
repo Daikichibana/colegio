@@ -23,7 +23,7 @@
                             <td v-text="curso.gestion_nombre"></td>
                             <td v-text="curso.paralelo_nombre"></td>
                             
-                            <td><a href="#" @click="listar(buscar)">Seleccionar</a></td>
+                            <!-- <td><a href="#" @click="listar(buscar)">Seleccionar</a></td> -->
                         </tr>
                     </tbody>
                 </table>

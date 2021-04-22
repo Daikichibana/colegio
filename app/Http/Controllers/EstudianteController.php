@@ -36,7 +36,7 @@ class EstudianteController extends Controller
         $estudiante->telefono=$request->telefono;
         $estudiante->save();
     }
-    public function delete(Reques $request){
+    public function delete(Request $request){
         $estudiante = Estudiante::findOrFail($request->id);
         $estudiante->delete();
     }    
