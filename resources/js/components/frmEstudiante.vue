@@ -89,7 +89,7 @@ export default {
                 console.log(error);
             });               
         },
-        
+
 
         llenar(data=[]){
             this.id_estudiante=data['id'];
