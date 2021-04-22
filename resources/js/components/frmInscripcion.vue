@@ -24,7 +24,9 @@
           <tr>
             <td>Curso</td>
             <td>
-              <input type="text" v-model="idCurso" placeholder="curso..." />
+              <input type="hidden" v-model="idCurso" />
+              <input type="text" v-model="cursoCurso" readonly/>
+              <input type="text" v-model="cursoGestion" readonly />
             </td>
             <a
               href="#"
@@ -183,6 +185,32 @@
           </div>
           <div class="modal-body">
             <!-- Aqui va su codigo -->
+            <center>
+                <h3>Busqueda de Cursos</h3>
+                <input type="text" v-model="buscarCurso" placeholder="Ej: 1ro">
+                <button type="button" @click="listarCurso(buscarCurso)">Buscar por Nombre</button><br>
+                <br>
+                <br>
+                <table border="1">
+                    <thead>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Gestion</th>
+                        <th>Paralelo</th>
+                        <th>Opcion</th>
+                    </thead>
+                    <tbody>
+                        <tr v-for="curso in arrayCurso" :key="curso.id">
+                            <td v-text="curso.id"></td>
+                            <td v-text="curso.curso_nombre"></td>
+                            <td v-text="curso.gestion_nombre"></td>
+                            <td v-text="curso.paralelo_nombre"></td>
+                            
+                            <td><a href="#" @click="seleccionarCurso(curso)">Seleccionar</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Cerrar</button>
@@ -210,6 +238,40 @@
           </div>
           <div class="modal-body">
             <!-- Aqui va su codigo -->
+            <center>
+                <h3>Busqueda de Notas</h3>
+                <input type="text" v-model="buscarNota" placeholder="Nombre">
+                <input type="text" v-model="apellido" placeholder="Apellido">
+                <button type="button" @click="listarNota(buscarNota, apellido)">Buscar por Nombre</button><br>
+                <!-- <a href="#" @click="mostrarDetalle()">Volver</a> -->
+                <br>
+                <br>
+                <table border="1">
+                    <thead>
+                        <th>Gestion</th>
+                        <th>Materia</th>
+                        <th>Ser</th>
+                        <th>Saber</th>
+                        <th>Hacer</th>
+                        <th>Decidir</th>
+                        <th>Suma</th>
+                    </thead>
+                    <tbody>
+                        <tr v-for="notas in arrayNotas" :key="notas.id">
+                            <!-- <td v-text="notas.id"></td> -->
+                            <td v-text="notas.Gestion"></td>
+                            <td v-text="notas.Materia"></td>
+                            <td v-text="notas.nota_ser"></td>
+                            <td v-text="notas.nota_saber"></td>
+                            <td v-text="notas.nota_hacer"></td>
+                            <td v-text="notas.nota_decidir"></td>
+                            <td v-text="notas.nota_decidir + notas.nota_ser + notas.nota_saber + notas.nota_hacer"></td>
+                            
+                            <!-- <td><a href="#" @click="listar(buscar)">Seleccionar</a></td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Cerrar</button>
@@ -298,6 +360,7 @@ export default {
   data() {
     return {
       listado: 0,
+      buscarCurso: "",
       fecha: "",
       buscar: "",
       errorMsj: "",
@@ -315,7 +378,9 @@ export default {
       estudianteApellidos: "",
       arrayEstudiante: [],
       idCurso: "",
+      cursoCurso: "",
       cursoNombre: "",
+      cursoParalelo: "",
       cursoGestion: "",
       arrayCurso: [],
       relacion: "",
@@ -339,6 +404,13 @@ export default {
       this.arrayApoderado = [];
       this.buscarApoderado = "";
       this.errorMsj = "";
+    },
+    seleccionarCurso(data = []) {      
+      this.idCurso = data["id"];
+      this.cursoNombre = data["curso_nombre"];
+      this.cursoGestion = data["gestion_nombre"];
+      this.cursoParalelo = data["paralelo_nombre"];
+      this.cursoCurso = data["curso_nombre"]+" "+data["paralelo_nombre"];
     },
     seleccionarApoderado(data = []) {
       let me = this;
@@ -381,6 +453,9 @@ export default {
       this.arrayEstudiante = [];
       this.relacion = "";
       this.arrayDetalle = [];
+      this.idCurso="";
+      this.cursoCurso = "";
+      this.cursoGestion = "";
     },
     guardarInscripcion() {
       let me = this;
@@ -416,6 +491,16 @@ export default {
           console.log(error);
         });
     },
+    listarNota(buscarNota, apellido){
+                let me = this;
+                var url='/frmbuscarnotas?buscar='+buscarNota+'&apellido='+apellido;
+                axios.get(url).then(function(response){
+                    me.arrayNotas=response.data;
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+            },
     listarEstudiante(buscar) {
       let me = this;
       var url = "/estudiante?buscar=" + buscar;
@@ -430,7 +515,7 @@ export default {
     },
     listarCurso(buscar) {
       let me = this;
-      var url = "/curso?buscar=" + buscar;
+      var url='/frmbuscarcurso?buscar='+buscar;
       axios
         .get(url)
         .then(function (response) {

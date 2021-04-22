@@ -28,7 +28,7 @@
                             <td v-text="notas.nota_saber"></td>
                             <td v-text="notas.nota_hacer"></td>
                             <td v-text="notas.nota_decidir"></td>
-                            <td v-text="notas.nota_decidir + notas.nota_ser + notas.nota_saber + notas.nota_decidir"></td>
+                            <td v-text="notas.nota_decidir + notas.nota_ser + notas.nota_saber + notas.nota_hacer"></td>
                             
                             <!-- <td><a href="#" @click="listar(buscar)">Seleccionar</a></td> -->
                         </tr>
