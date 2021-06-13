@@ -78,7 +78,7 @@
                 <frmbuscarcurso></frmbuscarcurso>
             </template>
             <template v-if="menu==4">
-                <frmbuscarnotas></frmbuscarnotas>
+                <frmejemplo></frmejemplo>
             </template>
             <template v-if="menu==5">
                 <frmEstudiante></frmEstudiante>

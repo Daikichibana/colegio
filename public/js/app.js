@@ -39019,22 +39019,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", {
                     domProps: { textContent: _vm._s(curso.paralelo_nombre) }
-                  }),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "a",
-                      {
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            return _vm.listar(_vm.buscar)
-                          }
-                        }
-                      },
-                      [_vm._v("Seleccionar")]
-                    )
-                  ])
+                  })
                 ])
               }),
               0
